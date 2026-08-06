@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendor Sign Up | LocalConnect</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/vendor/vendor_sign_up.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+
+    <div class="bg-grid"></div>
+
+    <div class="signup-container">
+        <div class="signup-card">
+            <header class="card-header">
+                <h1>Join <span class="brand-gradient">LocalConnect</span></h1>
+                <p class="subtitle">Sign up as a Vendor</p>
+            </header>
+
+            <div class="card-icon">
+                <i data-lucide="store"></i>
+            </div>
+
+            {% set messages = get_flashed_messages() %}
+            {% if messages %}
+            {% for category, message in messages %}
+            <div class="alert alert-{{ 'success' if category == 'success' else 'error' }}"
+                style="padding:10px;margin:10px 0;border-radius:8px;background:{{ '#d4edda' if category == 'success' else '#f8d7da' }};color:{{ '#155724' if category == 'success' else '#721c24' }};">
+                {{ message }}
+            </div>
+            {% endfor %}
+            {% endif %}
+            
+
+            <form class="signup-form" method="POST" action="/vendor/signup" id="signupForm">
+                <div class="input-group">
+                    <input type="text" name="business_name" placeholder="Shop Name" required>
+                </div>
+
+                <div class="input-group">
+                    <input type="email" name="email" placeholder="Email Address" required>
+                </div>
+
+                <div class="input-group select-wrapper">
+                    <select id="businessCategory" name="business_category" required onchange="updateSubCategories()">
+                        <option value="">Shop Category</option>
+                        <option value="Food & Restaurant">Food & Restaurant</option>
+                        <option value="Garage">Garage Services</option>
+                        <option value="Electronics">Electronics</option>
+                        <option value="Fashion">Fashion</option>
+                        <option value="Grocery">Grocery</option>
+                        <option value="Pharmacy">Pharmacy</option>
+                    </select>
+                    <i data-lucide="chevron-down" class="select-arrow"></i>
+                </div>
+
+                <div class="input-group select-wrapper">
+                    <select id="businessSubCategory" name="business_sub_category" required>
+                        <option value="">Select Sub-Category</option>
+                    </select>
+                    <i data-lucide="chevron-down" class="select-arrow"></i>
+                </div>
+
+                <div class="input-group">
+                    <input type="text" name="business_address" placeholder="Shop Address" required>
+                </div>
+
+                <div class="input-group">
+                    <input type="tel" name="phone" placeholder="Phone Number" required>
+                </div>
+
+                <div class="input-group">
+                    <input type="password" name="password" placeholder="Password" required>
+                </div>
+
+                <button type="submit" class="btn-submit">
+                    Launch Your Shop <i data-lucide="arrow-right"></i>
+                </button>
+            </form>
+
+            <footer class="card-footer">
+                <div class="trust-badge">
+                    <i data-lucide="badge-check"></i>
+                </div>
+                <p>Already have an account? <a href="/signin">Sign In</a></p>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        const subCategories = {
+            'Food & Restaurant': ['Street Food', 'Food Shop', 'Restaurant', 'Dhaba'],
+            'Garage': ['2-Wheeler', '3-Wheeler', '4-Wheeler'],
+            'Electronics': ['Mobiles', 'Home Appliances', 'Kitchen Appliances'],
+            'Fashion': ['Ladies', 'Gents', 'Boy', 'Girl'],
+            'Grocery': ['Vegetables', 'Dairy & Eggs', 'General Store', 'Fruits'],
+            'Pharmacy': ['Ayurvedic Medicine', 'Chemist & Drug Medicine', 'Baby Medicine']
+        };
+
+        function updateSubCategories() {
+            const categorySelect = document.getElementById('businessCategory');
+            const subCategorySelect = document.getElementById('businessSubCategory');
+            const selectedCategory = categorySelect.value;
+
+            // Clear existing options
+            subCategorySelect.innerHTML = '<option value="">Select Sub-Category</option>';
+
+            if (selectedCategory && subCategories[selectedCategory]) {
+                subCategories[selectedCategory].forEach(subCat => {
+                    const option = document.createElement('option');
+                    option.value = subCat;
+                    option.textContent = subCat;
+                    subCategorySelect.appendChild(option);
+                });
+            }
+        }
+    </script>
+</body>
+
+</html>
