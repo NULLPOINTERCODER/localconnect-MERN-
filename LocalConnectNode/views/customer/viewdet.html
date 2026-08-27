@@ -328,8 +328,8 @@
         }
         
         const userId = '{{ user_id if user_id else "" }}';
-        const vendorId = {{ vendor_id }};
-        const vendorName = '{{ vendor.business_name }}';
+        const vendorId = '{{ vendor.id if vendor else (vendor_id if vendor_id else "") }}';
+        const vendorName = '{{ vendor.business_name if vendor else "" }}';
 
         // Clear ALL localStorage if different user logs in
         const lastUserId = localStorage.getItem('lastUserId');
@@ -339,34 +339,56 @@
         if (userId) localStorage.setItem('lastUserId', userId);
 
         const ordersKey = userId ? `user_${userId}_orders` : 'orders';
-        let menuItems = [];
+        const initialMenuItems = {{ (menu_items | tojson) if menu_items else '[]' }};
+        let menuItems = Array.isArray(initialMenuItems) ? initialMenuItems.map(item => ({
+            id: item.id || item._id,
+            name: item.name,
+            sub_name: item.sub_name || item.subName || '',
+            category: item.category || '',
+            price: item.price,
+            qty: 0,
+            available: item.is_available !== undefined ? item.is_available : (item.isAvailable !== undefined ? item.isAvailable : true),
+            image_file: item.image_file || item.imageFile || 'default.jpg'
+        })) : [];
 
-        // Load menu from API
-        fetch(`/api/vendor/${vendorId}/menu`)
-            .then(res => res.json())
-            .then(items => {
-                menuItems = items.map(item => ({
-                    id: item.id,
-                    name: item.name,
-                    sub_name: item.sub_name,
-                    price: item.price,
-                    qty: 0,
-                    available: item.is_available,
-                    image_file: item.image_file
-                }));
-                
-                // Calculate price range
-                if (menuItems.length > 0) {
-                    const prices = menuItems.map(i => i.price);
-                    const minPrice = Math.min(...prices);
-                    const maxPrice = Math.max(...prices);
-                    document.getElementById('price-range').textContent = `${minPrice}—${maxPrice}`;
-                } else {
-                    document.getElementById('price-range').textContent = 'N/A';
-                }
-                
-                renderMenuCards();
-            });
+        function updatePriceRange() {
+            if (menuItems.length > 0) {
+                const prices = menuItems.map(i => i.price);
+                const minPrice = Math.min(...prices);
+                const maxPrice = Math.max(...prices);
+                const priceEl = document.getElementById('price-range');
+                if (priceEl) priceEl.textContent = `${minPrice}—${maxPrice}`;
+            } else {
+                const priceEl = document.getElementById('price-range');
+                if (priceEl) priceEl.textContent = 'N/A';
+            }
+        }
+
+        updatePriceRange();
+        renderMenuCards();
+
+        // Also fetch from API to ensure live sync
+        if (vendorId) {
+            fetch(`/api/vendor/${vendorId}/menu`)
+                .then(res => res.json())
+                .then(items => {
+                    if (Array.isArray(items) && items.length > 0) {
+                        menuItems = items.map(item => ({
+                            id: item.id || item._id,
+                            name: item.name,
+                            sub_name: item.sub_name || item.subName || '',
+                            category: item.category || '',
+                            price: item.price,
+                            qty: 0,
+                            available: item.is_available !== undefined ? item.is_available : (item.isAvailable !== undefined ? item.isAvailable : true),
+                            image_file: item.image_file || item.imageFile || 'default.jpg'
+                        }));
+                        updatePriceRange();
+                        renderMenuCards();
+                    }
+                })
+                .catch(err => console.log('API menu load:', err));
+        }
 
         // Calculate distance if vendor has coordinates
         const vendorLat = {{ vendor.latitude if vendor.latitude else 'null' }};

@@ -139,15 +139,16 @@ class PharmacyPage {
         card.onclick = () => this.viewVendorDetails(vendor.id);
 
         const isEmoji = /\p{Emoji}/u.test(vendor.image) && vendor.image.length < 10;
+        const isUrl = vendor.image && (vendor.image.startsWith('http://') || vendor.image.startsWith('https://'));
         const isBase64 = vendor.image && vendor.image.startsWith('data:image');
 
         let imageHtml;
-        if (isEmoji) {
+        if (isUrl || isBase64) {
+            imageHtml = `<img src="${vendor.image}" alt="${vendor.name}" style="width:100%;height:100%;object-fit:cover;">`;
+        } else if (isEmoji) {
             imageHtml = `<div style="font-size:80px;display:flex;align-items:center;justify-content:center;height:100%;">${vendor.image}</div>`;
-        } else if (isBase64) {
-            imageHtml = `<img src="${vendor.image}" alt="${vendor.name}">`;
         } else {
-            imageHtml = `<div style="font-size:80px;display:flex;align-items:center;justify-content:center;height:100%;">💊</div>`;
+            imageHtml = `<div style="font-size:80px;display:flex;align-items:center;justify-content:center;height:100%;">🏪</div>`;
         }
 
         let matchingDishesHtml = '';

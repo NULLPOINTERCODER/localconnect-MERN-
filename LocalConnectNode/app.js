@@ -499,10 +499,16 @@ app.get('/customer/profile', async (req, res) => {
 });
 
 app.get('/customer/vendor/:id', async (req, res) => {
-  const vendor = toFlaskVendor(await Vendor.findById(req.params.id));
-  const menu_items = (await MenuItem.find({ vendor: req.params.id })).map(toFlaskMenuItem);
-  const offers = await Offer.find({ vendor: req.params.id, active: true });
-  res.render('customer/viewdet.html', { vendor, menu_items, offers });
+  try {
+    const vendor = toFlaskVendor(await Vendor.findById(req.params.id));
+    if (!vendor) return res.redirect('/customer/dashboard');
+    const menu_items = (await MenuItem.find({ vendor: req.params.id })).map(toFlaskMenuItem);
+    const offers = await Offer.find({ vendor: req.params.id, active: true });
+    res.render('customer/viewdet.html', { vendor, vendor_id: req.params.id, menu_items, offers });
+  } catch (err) {
+    console.error('Error loading vendor details:', err);
+    res.redirect('/customer/dashboard');
+  }
 });
 
 app.get('/customer/change-password', async (req, res) => {
