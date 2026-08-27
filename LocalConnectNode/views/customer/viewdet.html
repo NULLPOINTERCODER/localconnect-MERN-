@@ -566,7 +566,7 @@
             const menuGrid = document.getElementById('menu-grid');
             menuGrid.innerHTML = menuItems.map(item => {
                 const imageUrl = item.image_file && item.image_file !== 'default.jpg'
-                    ? `/static/images/food/${item.image_file}`
+                    ? (item.image_file.startsWith('http') || item.image_file.startsWith('data:') ? item.image_file : `/static/images/food/${item.image_file}`)
                     : 'https://via.placeholder.com/400x300?text=No+Image';
                 return `
                 <div class="menu-card" style="background:white;border-radius:15px;padding:15px;border:1px solid #eee;display:flex;flex-direction:column;box-shadow:0 4px 15px rgba(0,0,0,0.04);${!item.available || !isOpen ? 'opacity:0.6;' : ''}">

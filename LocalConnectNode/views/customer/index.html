@@ -59,7 +59,7 @@
                     </a>
                 </div>
                 <div class="category-card">
-                    <a href="{{ "/food_restaurants" }}" class="card-link">
+                    <a href="/customer/food-restaurants" class="card-link">
                         <div class="category-icon-wrapper">
                             <svg width="40" height="40" viewBox="0 0 24 24" fill="#34495e">
                                 <path d="M2 18h20a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-1a1 1 0 0 1 1-1Z"></path>
@@ -148,21 +148,67 @@
     </main>
 
     <footer class="footer">
-        <div class="footer-inner">
-            <div class="footer-brand">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
-                    <circle cx="12" cy="10" r="3"></circle>
-                </svg>
-                <span>LocalConnect</span>
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-col brand-col">
+                    <div class="footer-brand">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                        <span>LocalConnect</span>
+                    </div>
+                    <p class="brand-desc">Connecting you with local businesses, essential services, and fast delivery right in your neighborhood.</p>
+                    <div class="footer-socials">
+                        <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-heading">Categories</h4>
+                    <ul class="footer-menu">
+                        <li><a href="/customer/pharmacy"><i class="fa-solid fa-chevron-right"></i> Pharmacy</a></li>
+                        <li><a href="/customer/grocery"><i class="fa-solid fa-chevron-right"></i> Grocery</a></li>
+                        <li><a href="/customer/fashion"><i class="fa-solid fa-chevron-right"></i> Fashion</a></li>
+                        <li><a href="/customer/food-restaurants"><i class="fa-solid fa-chevron-right"></i> Food & Dining</a></li>
+                        <li><a href="/customer/electronics"><i class="fa-solid fa-chevron-right"></i> Electronics</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-heading">Quick Links</h4>
+                    <ul class="footer-menu">
+                        <li><a href="#"><i class="fa-solid fa-chevron-right"></i> About Us</a></li>
+                        <li><a href="#"><i class="fa-solid fa-chevron-right"></i> How it Works</a></li>
+                        <li><a href="#"><i class="fa-solid fa-chevron-right"></i> Become a Vendor</a></li>
+                        <li><a href="#"><i class="fa-solid fa-chevron-right"></i> Help Center</a></li>
+                        <li><a href="#"><i class="fa-solid fa-chevron-right"></i> Privacy & Terms</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-heading">Contact & Support</h4>
+                    <ul class="footer-contact">
+                        <li><i class="fa-solid fa-location-dot"></i> <span>LocalConnect HQ, Tech Park, City</span></li>
+                        <li><i class="fa-solid fa-envelope"></i> <span>support@localconnect.com</span></li>
+                        <li><i class="fa-solid fa-phone"></i> <span>+1 (800) 123-4567</span></li>
+                    </ul>
+                </div>
             </div>
-            <nav class="footer-links">
-                <a href="#">About</a>
-                <a href="#">Contact</a>
-                <a href="#">Help</a>
-                <a href="#">Terms</a>
-            </nav>
-            <p class="footer-copy">&copy; 2026 LocalConnect. All rights reserved.</p>
+
+            <div class="footer-bottom">
+                <p class="footer-copy">&copy; 2026 <strong>LocalConnect</strong>. All rights reserved. Built for local communities.</p>
+                <div class="footer-legal">
+                    <a href="#">Privacy Policy</a>
+                    <span class="dot">•</span>
+                    <a href="#">Terms of Service</a>
+                    <span class="dot">•</span>
+                    <a href="#">Security</a>
+                </div>
+            </div>
         </div>
     </footer>
 {% endblock %}

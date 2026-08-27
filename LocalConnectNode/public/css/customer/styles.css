@@ -397,14 +397,256 @@
     margin: 5px 0;
 }
 
-.chat-shop-action {
-    display: inline-block;
-    background: var(--primary-green);
-    color: white;
-    padding: 4px 10px;
-    border-radius: 4px;
-    font-size: 0.8rem;
-    text-decoration: none;
-    margin-top: 5px;
-    cursor: pointer;
+.chat-shop-action {\r
+    display: inline-block;\r
+    background: var(--primary-green);\r
+    color: white;\r
+    padding: 4px 10px;\r
+    border-radius: 4px;\r
+    font-size: 0.8rem;\r
+    text-decoration: none;\r
+    margin-top: 5px;\r
+    cursor: pointer;\r
+}\r
+\r
+/* =============================================\r
+   Modern Premium Footer\r
+   ============================================= */\r
+.footer {\r
+    background: #0f172a;\r
+    color: #94a3b8;\r
+    padding: 60px 20px 30px;\r
+    margin-top: 80px;\r
+    border-top: 3px solid #27ae60;\r
+    font-family: 'Inter', sans-serif;\r
+}\r
+\r
+.footer-container {\r
+    max-width: 1200px;\r
+    margin: 0 auto;\r
+}\r
+\r
+.footer-grid {\r
+    display: grid;\r
+    grid-template-columns: 2fr 1fr 1fr 1.5fr;\r
+    gap: 48px;\r
+    margin-bottom: 50px;\r
+}\r
+\r
+.footer-col {\r
+    display: flex;\r
+    flex-direction: column;\r
+    gap: 12px;\r
+}\r
+\r
+.footer-brand {\r
+    display: flex;\r
+    align-items: center;\r
+    gap: 10px;\r
+    color: #27ae60;\r
+    font-weight: 700;\r
+    font-size: 1.35rem;\r
+    letter-spacing: -0.5px;\r
+    text-decoration: none;\r
+}\r
+\r
+.footer-brand svg {\r
+    stroke: #27ae60;\r
+    flex-shrink: 0;\r
+}\r
+\r
+.brand-desc {\r
+    color: #94a3b8;\r
+    font-size: 0.9rem;\r
+    line-height: 1.7;\r
+    margin: 4px 0 0;\r
+    max-width: 300px;\r
+}\r
+\r
+.footer-socials {\r
+    display: flex;\r
+    gap: 10px;\r
+    margin-top: 8px;\r
+}\r
+\r
+.footer-socials a {\r
+    width: 40px;\r
+    height: 40px;\r
+    border-radius: 50%;\r
+    background: #1e293b;\r
+    color: #94a3b8;\r
+    display: flex;\r
+    align-items: center;\r
+    justify-content: center;\r
+    text-decoration: none;\r
+    font-size: 0.95rem;\r
+    transition: all 0.25s ease;\r
+    border: 1px solid #334155;\r
+}\r
+\r
+.footer-socials a:hover {\r
+    background: #27ae60;\r
+    color: #ffffff;\r
+    border-color: #27ae60;\r
+    transform: translateY(-3px);\r
+    box-shadow: 0 6px 16px rgba(39, 174, 96, 0.35);\r
+}\r
+\r
+.footer-heading {\r
+    color: #f1f5f9;\r
+    font-size: 1rem;\r
+    font-weight: 600;\r
+    margin: 0 0 8px;\r
+    padding-bottom: 10px;\r
+    border-bottom: 1px solid #1e293b;\r
+    letter-spacing: 0.02em;\r
+    text-transform: uppercase;\r
+    font-size: 0.8rem;\r
+}\r
+\r
+.footer-menu {\r
+    list-style: none;\r
+    padding: 0;\r
+    margin: 0;\r
+    display: flex;\r
+    flex-direction: column;\r
+    gap: 10px;\r
+}\r
+\r
+.footer-menu li a {\r
+    color: #94a3b8;\r
+    text-decoration: none;\r
+    font-size: 0.9rem;\r
+    display: inline-flex;\r
+    align-items: center;\r
+    gap: 8px;\r
+    transition: all 0.2s ease;\r
+    padding: 2px 0;\r
+}\r
+\r
+.footer-menu li a i {\r
+    font-size: 0.65rem;\r
+    color: #27ae60;\r
+    transition: transform 0.2s ease;\r
+    opacity: 0.8;\r
+}\r
+\r
+.footer-menu li a:hover {\r
+    color: #e2e8f0;\r
+    padding-left: 4px;\r
+}\r
+\r
+.footer-menu li a:hover i {\r
+    transform: translateX(2px);\r
+    opacity: 1;\r
+}\r
+\r
+.footer-contact {\r
+    list-style: none;\r
+    padding: 0;\r
+    margin: 0;\r
+    display: flex;\r
+    flex-direction: column;\r
+    gap: 14px;\r
+}\r
+\r
+.footer-contact li {\r
+    display: flex;\r
+    align-items: flex-start;\r
+    gap: 12px;\r
+    color: #94a3b8;\r
+    font-size: 0.88rem;\r
+    line-height: 1.5;\r
+}\r
+\r
+.footer-contact li i {\r
+    color: #27ae60;\r
+    margin-top: 3px;\r
+    font-size: 0.9rem;\r
+    flex-shrink: 0;\r
+    width: 14px;\r
+    text-align: center;\r
+}\r
+\r
+.footer-bottom {\r
+    border-top: 1px solid #1e293b;\r
+    padding-top: 28px;\r
+    display: flex;\r
+    justify-content: space-between;\r
+    align-items: center;\r
+    flex-wrap: wrap;\r
+    gap: 14px;\r
+}\r
+\r
+.footer-copy {\r
+    color: #64748b;\r
+    font-size: 0.875rem;\r
+    margin: 0;\r
+}\r
+\r
+.footer-copy strong {\r
+    color: #94a3b8;\r
+    font-weight: 600;\r
+}\r
+\r
+.footer-legal {\r
+    display: flex;\r
+    align-items: center;\r
+    gap: 14px;\r
+    flex-wrap: wrap;\r
+}\r
+\r
+.footer-legal a {\r
+    color: #64748b;\r
+    text-decoration: none;\r
+    font-size: 0.85rem;\r
+    transition: color 0.2s ease;\r
+}\r
+\r
+.footer-legal a:hover {\r
+    color: #27ae60;\r
+}\r
+\r
+.footer-legal .dot {\r
+    color: #334155;\r
+    font-size: 0.8rem;\r
+    user-select: none;\r
+}\r
+\r
+/* Responsive Footer */\r
+@media (max-width: 992px) {\r
+    .footer-grid {\r
+        grid-template-columns: 1fr 1fr;\r
+        gap: 32px;\r
+    }\r
+\r
+    .footer-col.brand-col {\r
+        grid-column: span 2;\r
+    }\r
+\r
+    .brand-desc {\r
+        max-width: 100%;\r
+    }\r
+}\r
+\r
+@media (max-width: 576px) {\r
+    .footer {\r
+        padding: 40px 16px 24px;\r
+        margin-top: 50px;\r
+    }\r
+\r
+    .footer-grid {\r
+        grid-template-columns: 1fr;\r
+        gap: 24px;\r
+    }\r
+\r
+    .footer-col.brand-col {\r
+        grid-column: span 1;\r
+    }\r
+\r
+    .footer-bottom {\r
+        flex-direction: column;\r
+        align-items: flex-start;\r
+        gap: 10px;\r
+    }\r
 }

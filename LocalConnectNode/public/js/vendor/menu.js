@@ -231,7 +231,11 @@ async function handleFormSubmit(e) {
                         
                         if (result.image_file && result.image_file !== 'default.jpg') {
                             const img = card.querySelector('.item-image');
-                            img.src = `/static/images/food/${result.image_file}?t=${Date.now()}`;
+                            if (result.image_file.startsWith('http') || result.image_file.startsWith('data:')) {
+                                img.src = result.image_file;
+                            } else {
+                                img.src = `/static/images/food/${result.image_file}?t=${Date.now()}`;
+                            }
                         }
                     }
                 } else {
