@@ -18,6 +18,7 @@ mongoose.connect(mongoURI, {
   .catch(err => console.error('❌ MongoDB connection error:', err));
 
 const app = express();
+app.set('trust proxy', 1);
 
 // Configure Nunjucks engine (Jinja2 for Node.js)
 const env = nunjucks.configure(path.join(__dirname, 'views'), {
