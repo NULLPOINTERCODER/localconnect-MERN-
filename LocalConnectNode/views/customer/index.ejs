@@ -1,0 +1,217 @@
+<%- include("customer/customer_base.ejs") %>
+
+<title>LocalConnect Dashboard</title>
+
+
+    <link rel="stylesheet" href="/static/css/customer/styles.css">
+
+
+
+    <main class="content-wrapper dashboard-content">
+        <!-- Welcome Hero -->
+        <section class="welcome-section">
+            <h1>Welcome back, <%= (typeof user_name !== "undefined" && user_name) ? user_name : 'Guest' %> 👋</h1>
+            <p>Explore local services and shops near you</p>
+        </section>
+
+        <!-- Category Grid -->
+        <section class="category-container">
+            <div class="categories-grid">
+                <div class="category-card">
+                    <a href="<%= "/customer/pharmacy"  %>" class="card-link">
+                        <div class="category-icon-wrapper">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="#2ecc71">
+                                <rect x="9" y="3" width="6" height="18" rx="1"></rect>
+                                <rect x="3" y="9" width="18" height="6" rx="1"></rect>
+                            </svg>
+                        </div>
+                        <p>Pharmacy</p>
+                    </a>
+                </div>
+                <div class="category-card">
+                    <a href="<%= "/customer/grocery"  %>" class="card-link">
+                        <div class="category-icon-wrapper">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#27ae60" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m7.5 4.27 9 5.15"></path>
+                                <path d="M21 8a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2z"></path>
+                                <path d="M10 12v10"></path>
+                                <path d="M14 12v10"></path>
+                                <path d="m17 22 4-12"></path>
+                                <path d="m7 22-4-12"></path>
+                                <path d="M3 22h18"></path>
+                            </svg>
+                        </div>
+                        <p>Grocery</p>
+                    </a>
+                </div>
+                <div class="category-card">
+                    <a href="<%= "/customer/fashion"  %>" class="card-link">
+                        <div class="category-icon-wrapper">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="#ff7675">
+                                <path
+                                    d="M12 2a4 4 0 0 0-4 4v1.17l-1.17 1.17a4 4 0 1 0 5.66 5.66L13.66 13H15a4 4 0 1 0 0-8h-1.17L12 3.17V2z">
+                                </path>
+                                <circle cx="12" cy="12" r="3" fill="#fdcb6e"></circle>
+                            </svg>
+                        </div>
+                        <p>Fashion</p>
+                    </a>
+                </div>
+                <div class="category-card">
+                    <a href="/customer/food-restaurants" class="card-link">
+                        <div class="category-icon-wrapper">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="#34495e">
+                                <path d="M2 18h20a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-1a1 1 0 0 1 1-1Z"></path>
+                                <path d="M12 4V2"></path>
+                                <path d="M3 17a9 9 0 0 1 18 0"></path>
+                            </svg>
+                        </div>
+                        <p>Food & Restaurant</p>
+                    </a>
+                </div>
+                <div class="category-card">
+                    <a href="<%= "/customer/garage"  %>" class="card-link">
+                        <div class="category-icon-wrapper">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#34495e" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path
+                                    d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z">
+                                </path>
+                            </svg>
+                        </div>
+                        <p>Garage Services</p>
+                    </a>
+                </div>
+                <div class="category-card">
+                    <a href="<%= "/customer/electronics"  %>" class="card-link">
+                        <div class="category-icon-wrapper">
+                            <div class="dual-icon">
+                                <svg width="30" height="30" viewBox="0 0 24 24" fill="#f1c40f">
+                                    <path d="M9 18h6a6 6 0 1 0-6 0Z"></path>
+                                    <path d="M12 22v-4"></path>
+                                </svg>
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="#7f8c8d">
+                                    <path
+                                        d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z">
+                                    </path>
+                                </svg>
+                            </div>
+                        </div>
+                        <p>Electronics</p>
+                    </a>
+                </div>
+                <div class="category-card">
+                    <a href="#" class="card-link">
+                        <div class="category-icon-wrapper">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#2ecc71" stroke-width="2">
+                                <path d="M5 10V4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-3"></path>
+                                <path d="M5 10h10" stroke="#ff7675"></path>
+                                <circle cx="18" cy="15" r="3" fill="#ff7675" stroke="none"></circle>
+                            </svg>
+                        </div>
+                        <p>Daily Essentials</p>
+                    </a>
+                </div>
+                <div class="category-card coming-soon-card">
+                    <div class="card-link disabled">
+                        <div class="category-icon-wrapper">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="#34495e">
+                                <path
+                                    d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-1.1 0-2.1.9-2.1 2L2 13v3c0 .6.4 1 1 1h2">
+                                </path>
+                                <circle cx="7" cy="17" r="2"></circle>
+                                <circle cx="17" cy="17" r="2"></circle>
+                                <path d="M14 6l2 2-4 4" fill="none" stroke="#7f8c8d" stroke-width="2"></path>
+                            </svg>
+                        </div>
+                        <p>Coming Soon</p>
+                        <span class="coming-soon-badge">Coming Soon</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Nearby Vendors -->
+        <section class="vendors-section">
+            <h2 class="section-title">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
+                    <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+                Nearby Vendors
+            </h2>
+            <div class="vendor-grid" id="vendor-grid">
+                <!-- Vendors rendered by script.js -->
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-col brand-col">
+                    <div class="footer-brand">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                        <span>LocalConnect</span>
+                    </div>
+                    <p class="brand-desc">Connecting you with local businesses, essential services, and fast delivery right in your neighborhood.</p>
+                    <div class="footer-socials">
+                        <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-heading">Categories</h4>
+                    <ul class="footer-menu">
+                        <li><a href="/customer/pharmacy"><i class="fa-solid fa-chevron-right"></i> Pharmacy</a></li>
+                        <li><a href="/customer/grocery"><i class="fa-solid fa-chevron-right"></i> Grocery</a></li>
+                        <li><a href="/customer/fashion"><i class="fa-solid fa-chevron-right"></i> Fashion</a></li>
+                        <li><a href="/customer/food-restaurants"><i class="fa-solid fa-chevron-right"></i> Food & Dining</a></li>
+                        <li><a href="/customer/electronics"><i class="fa-solid fa-chevron-right"></i> Electronics</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-heading">Quick Links</h4>
+                    <ul class="footer-menu">
+                        <li><a href="#"><i class="fa-solid fa-chevron-right"></i> About Us</a></li>
+                        <li><a href="#"><i class="fa-solid fa-chevron-right"></i> How it Works</a></li>
+                        <li><a href="#"><i class="fa-solid fa-chevron-right"></i> Become a Vendor</a></li>
+                        <li><a href="#"><i class="fa-solid fa-chevron-right"></i> Help Center</a></li>
+                        <li><a href="#"><i class="fa-solid fa-chevron-right"></i> Privacy & Terms</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-heading">Contact & Support</h4>
+                    <ul class="footer-contact">
+                        <li><i class="fa-solid fa-location-dot"></i> <span>LocalConnect HQ, Tech Park, City</span></li>
+                        <li><i class="fa-solid fa-envelope"></i> <span>support@localconnect.com</span></li>
+                        <li><i class="fa-solid fa-phone"></i> <span>+1 (800) 123-4567</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p class="footer-copy">&copy; 2026 <strong>LocalConnect</strong>. All rights reserved. Built for local communities.</p>
+                <div class="footer-legal">
+                    <a href="#">Privacy Policy</a>
+                    <span class="dot">•</span>
+                    <a href="#">Terms of Service</a>
+                    <span class="dot">•</span>
+                    <a href="#">Security</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+
+    <script src="/static/js/customer/script.js" defer></script>
