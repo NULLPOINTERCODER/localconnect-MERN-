@@ -194,7 +194,7 @@
         updateCurrentTime();
         setInterval(updateCurrentTime, 1000);
 
-        const ordersData = <%= orders |dump | safe %>;
+        const ordersData = <%= JSON.stringify(orders) %>;
         const orders = ordersData.map(o => ({
             id: o.id,
             vendor: o.vendor_name,
@@ -337,7 +337,7 @@
 
         function getVendorIdFromOrder(order) {
             // Find vendor ID by matching vendor name from the orders data
-            const orderData = <%= orders |dump | safe %>;
+            const orderData = <%= JSON.stringify(orders) %>;
         const matchingOrder = orderData.find(o => o.id === order.id);
         return matchingOrder ? matchingOrder.vendor_id : null;
         }

@@ -87,9 +87,9 @@
         </svg>
     </div>
     <script src="/static/js/customer/base.js"></script>
-    <script type="application/json" id="vendors-data"><%= vendors|dump | safe %></script>
-    <script type="application/json" id="customer-lat"><%= customer_lat|dump | safe %></script>
-    <script type="application/json" id="customer-lon"><%= customer_lon|dump | safe %></script>
+    <script type="application/json" id="vendors-data"><%= JSON.stringify(vendors) %></script>
+    <script type="application/json" id="customer-lat"><%= JSON.stringify(customer_lat) %></script>
+    <script type="application/json" id="customer-lon"><%= JSON.stringify(customer_lon) %></script>
     <script>
         function viewProfile() { window.location.href = '/customer/profile'; }
         function myOrders() { window.location.href = '/customer/orders'; }

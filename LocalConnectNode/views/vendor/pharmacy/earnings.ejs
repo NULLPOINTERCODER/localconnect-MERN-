@@ -154,11 +154,11 @@ Earnings
     
     // Default data
     const defaultData = {
-        labels: <%= chart_labels|dump %>,
-        values: <%= chart_values|dump %>,
+        labels: <%= JSON.stringify(chart_labels) %>,
+        values: <%= JSON.stringify(chart_values) %>,
         total: <%= week_earnings %>,
         average: <%= week_earnings/7 %>,
-        peak: Math.max(...<%= chart_values|dump %>)
+        peak: Math.max(...<%= JSON.stringify(chart_values) %>)
     };
     
     // Function to fetch dynamic data from backend

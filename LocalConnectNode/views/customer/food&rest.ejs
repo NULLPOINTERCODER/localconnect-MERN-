@@ -105,13 +105,13 @@
 
     <script src="/static/js/customer/base.js"></script>
     <script type="application/json" id="vendors-data">
-        <%= vendors|dump | safe %>
+        <%= JSON.stringify(vendors) %>
     </script>
     <script type="application/json" id="customer-lat">
-        <%= customer_lat|dump | safe %>
+        <%= JSON.stringify(customer_lat) %>
     </script>
     <script type="application/json" id="customer-lon">
-        <%= customer_lon|dump | safe %>
+        <%= JSON.stringify(customer_lon) %>
     </script>
     <script>
         // Global functions for profile dropdown

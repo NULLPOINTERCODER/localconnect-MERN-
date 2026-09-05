@@ -143,8 +143,8 @@ Earnings
 
 <script>
     const chartData = {
-        labels: <%= chart_labels|dump %>,
-        values: <%= chart_values|dump %>
+        labels: <%= JSON.stringify(chart_labels) %>,
+        values: <%= JSON.stringify(chart_values) %>
     };
 </script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
