@@ -24,12 +24,13 @@
                 <% if (messages && messages.length) { %>
                     <% messages.forEach(([category, message]) => { %>
                         <div class="alert alert-<%= category === 'success' ? 'success' : 'error' %>">
-                            <%= message  %>
+                            <%= message %>
                         </div>
                     <% }); %>
+                <% } %>
             
 
-            <form class="signin-form" method="POST" action="<%= '/signin'  %>">
+            <form class="signin-form" method="POST" action="<%= '/signin' %>">
                 <div class="role-selection">
                     <span class="role-label">* Role</span>
                     <div class="radio-group">

@@ -87,7 +87,7 @@ function updateOrderStatus(orderId, status) {
                 // Get order amount and show banner
                 const orderCard = document.querySelector(`[data-order-id="${orderId}"]`);
                 const amountText = orderCard.querySelector('.order-amount').textContent;
-                const amount = amountText|replace('₹',''));
+                const amount = amountText.replace('₹','');
                 showEarningsBanner(amount);
                 
                 // Wait 2 seconds then reload to show updated status and earnings
@@ -381,7 +381,7 @@ function showNotification(message, type = 'info') {
 
 
 
-<div class="dashboard-wrapper" data-status="<%= 'open' if vendor_profile and vendor_profile.is_open else 'closed'  %>">
+<div class="dashboard-wrapper" data-status="<%= (vendor_profile && vendor_profile.is_open) ? ('open') : ('closed') %>">
     <div class="stats-grid">
         <div class="stat-card">
             <div class="stat-icon-box green-bg">
@@ -389,7 +389,7 @@ function showNotification(message, type = 'info') {
             </div>
             <div class="stat-info">
                 <p>Today's Orders</p>
-                <h3><%= todays_orders  %></h3>
+                <h3><%= todays_orders %></h3>
             </div>
         </div>
 
@@ -399,7 +399,7 @@ function showNotification(message, type = 'info') {
             </div>
             <div class="stat-info">
                 <p>Today's Earnings</p>
-                <h3>₹<%= todays_earnings  %></h3>
+                <h3>₹<%= todays_earnings %></h3>
             </div>
         </div>
 
@@ -409,7 +409,7 @@ function showNotification(message, type = 'info') {
             </div>
             <div class="stat-info">
                 <p>Rating</p>
-                <h3><%= avg_rating  %> <span class="star-mini">★</span></h3>
+                <h3><%= avg_rating %> <span class="star-mini">★</span></h3>
             </div>
         </div>
 
@@ -419,7 +419,7 @@ function showNotification(message, type = 'info') {
             </div>
             <div class="stat-info">
                 <p>Pending Orders</p>
-                <h3><%= pending_orders  %></h3>
+                <h3><%= pending_orders %></h3>
             </div>
         </div>
 
@@ -441,65 +441,65 @@ function showNotification(message, type = 'info') {
         </div>
         <div class="orders-grid">
             <% if (orders && orders.length) { orders.forEach(function(order) { %>
-            <div class="order-card compact" data-order-id="<%= order.id  %>">
+            <div class="order-card compact" data-order-id="<%= order.id %>">
                 <div class="order-header">
-                    <div class="order-id">#<%= order.id  %></div>
-                    <div class="order-time" data-timestamp="<%= order.created_at.timestamp()  %>"><%= order.created_at.strftime('%H:%M') if order.created_at else 'Now'  %> | <%= order.created_at.strftime('%I:%M %p') if order.created_at else 'Now'  %></div>
+                    <div class="order-id">#<%= order.id %></div>
+                    <div class="order-time" data-timestamp="<%= order.created_at.getTime() %>"><%= (order.created_at) ? (order.created_at.toLocaleDateString()) : ('Now') %> | <%= (order.created_at) ? (order.created_at.toLocaleDateString()) : ('Now') %></div>
                 </div>
                 
                 <div class="order-content">
-                    <div class="order-items-compact"><%= order.items_summary  %></div>
+                    <div class="order-items-compact"><%= order.items_summary %></div>
                     <% if (order.customer_suggestion) { %>
                     <div class="customer-note" style="background: #f8f9fa; padding: 8px 12px; border-radius: 6px; margin: 8px 0; border-left: 3px solid #3498db;">
                         <span style="font-size: 12px; color: #7f8c8d; font-weight: 600;">Customer Note:</span>
-                        <div style="font-size: 13px; color: #2c3e50; margin-top: 2px;"><%= order.customer_suggestion  %></div>
+                        <div style="font-size: 13px; color: #2c3e50; margin-top: 2px;"><%= order.customer_suggestion %></div>
                     </div>
                     <% } %>
                     <div class="order-meta">
-                        <span class="order-type-compact <%= 'delivery' if order.delivery_type == 'delivery' else 'takeaway'  %>">
-                            <i class="fa-solid <%= 'fa-motorcycle' if order.delivery_type == 'delivery' else 'fa-bag-shopping'  %>"></i>
-                            <%= order.delivery_type|title  %>
+                        <span class="order-type-compact <%= (order.delivery_type == 'delivery') ? ('delivery') : ('takeaway') %>">
+                            <i class="fa-solid <%= (order.delivery_type == 'delivery') ? ('fa-motorcycle') : ('fa-bag-shopping') %>"></i>
+                            <%= order.delivery_type %>
                         </span>
-                        <span class="order-amount">₹<%= order.total  %></span>
-                        <span class="payment-type"><%= 'Online' if order.payment_type == 'online' else 'Cash'  %></span>
+                        <span class="order-amount">₹<%= order.total %></span>
+                        <span class="payment-type"><%= (order.payment_type == 'online') ? ('Online') : ('Cash') %></span>
                     </div>
                 </div>
                 
                 <div class="order-status-section">
-                    <div class="status-badge-compact status-<%= (order.status or 'pending').lower()  %>" id="status-<%= order.id  %>">
-                        <%= order.status or 'Pending'  %>
+                    <div class="status-badge-compact status-<%= (order.status || 'pending').toLowerCase() %>" id="status-<%= order.id %>">
+                        <%= order.status || 'Pending' %>
                     </div>
                     
-                    <div class="order-actions-compact" id="actions-<%= order.id  %>">
-                        <% if (not order.status or order.status == 'Pending') { %>
-                        <button class="btn-action accept" onclick="updateOrderStatus(<%= order.id  %>, 'preparing')">
+                    <div class="order-actions-compact" id="actions-<%= order.id %>">
+                        <% if (!order.status || order.status == 'Pending') { %>
+                        <button class="btn-action accept" onclick="updateOrderStatus(<%= order.id %>, 'preparing')">
                             Accept
                         </button>
-                        <button class="btn-action reject" onclick="openRejectModal(<%= order.id  %>)">
+                        <button class="btn-action reject" onclick="openRejectModal(<%= order.id %>)">
                             Reject
                         </button>
                         <% } else if (order.status == 'preparing') { %>
-                        <button class="btn-action accept" onclick="updateOrderStatus(<%= order.id  %>, '<%= 'out_for_delivery' if order.delivery_type == 'delivery' else 'ready'  %>')">
+                        <button class="btn-action accept" onclick="updateOrderStatus(<%= order.id %>, '<%= (order.delivery_type == 'delivery') ? ('out_for_delivery') : ('ready') %>')">
                             <% if (order.delivery_type == 'takeaway') { %>
                                 Ready for Takeaway
                             <% } else { %>
-                                Out for Delivery
+                            Out for Delivery
                             <% } %>
                         </button>
-                        <% } else if (order.status == 'ready' and order.delivery_type == 'takeaway') { %>
-                        <button class="btn-action accept" onclick="updateOrderStatus(<%= order.id  %>, 'Completed')">
+                        <% } else if (order.status == 'ready' && order.delivery_type == 'takeaway') { %>
+                        <button class="btn-action accept" onclick="updateOrderStatus(<%= order.id %>, 'Completed')">
                             Order Delivered
                         </button>
                         <% } %>
                     </div>
-                </div>
             </div>
-            <% } else { %>
+        </div>
+        <% }); } else { %>
             <div class="empty-state" style="text-align: center; padding: 40px; color: #666;">
                 <i class="fa-solid fa-inbox" style="font-size: 3rem; color: #ddd; margin-bottom: 15px;"></i>
                 <p>No orders yet</p>
             </div>
-            <% }); } %>
+            <% } %>
         </div>
     </div>
 
@@ -522,32 +522,32 @@ function showNotification(message, type = 'info') {
                     <tbody>
                         <% if (menu_items && menu_items.length) { menu_items.forEach(function(item) { %>
                         <tr>
-                            <td><%= item.name  %></td>
-                            <td>₹<%= item.price  %></td>
+                            <td><%= item.name %></td>
+                            <td>₹<%= item.price %></td>
                             <td>
                                 <label class="switch">
-                                    <input type="checkbox" <%= 'checked' if item.is_available else ''  %> onchange="toggleItemAvailability(<%= item.id  %>, this.checked)">
+                                    <input type="checkbox" <%= (item.is_available) ? ('checked') : ('') %> onchange="toggleItemAvailability(<%= item.id %>, this.checked)">
                                     <span class="slider round"></span>
                                 </label>
                             </td>
                             <td>
                                 <div class="action-buttons">
-                                    <button class="btn-edit" onclick="openEditModal(<%= item.id  %>)" title="Edit Item">
+                                    <button class="btn-edit" onclick="openEditModal(<%= item.id %>)" title="Edit Item">
                                         <i class="fa-solid fa-pen"></i>
                                     </button>
-                                    <button class="btn-delete" onclick="deleteItem(<%= item.id  %>)" title="Delete Item">
+                                    <button class="btn-delete" onclick="deleteItem(<%= item.id %>)" title="Delete Item">
                                         <i class="fa-solid fa-trash"></i>
                                     </button>
                                 </div>
                             </td>
                         </tr>
-                        <% } else { %>
+                        <% }); } else { %>
                         <tr>
                             <td colspan="4" style="text-align: center; color: #666; padding: 20px;">
                                 No menu items found. <a href="/vendor/menu" style="color: var(--primary-green);">Add items</a>
                             </td>
                         </tr>
-                        <% }); } %>
+                        <% } %>
                     </tbody>
                 </table>
             </div>

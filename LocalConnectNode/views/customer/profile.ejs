@@ -233,7 +233,7 @@
     </style>
 </head>
 
-<body data-user-id="<%= user_id  %>">
+<body data-user-id="<%= user_id %>">
     <header class="navbar">
         <div class="nav-container">
             <div class="logo" onclick="window.location.href='/customer/dashboard'">
@@ -337,59 +337,59 @@
         <div class="profile-card">
             <div class="profile-header">
                 <div class="profile-avatar" id="profileAvatar"></div>
-                <h2><%= customer.full_name if customer else 'User'  %></h2>
+                <h2><%= (customer) ? (customer.full_name) : ('User') %></h2>
                 <p style="color: #7f8c8d;">Customer Profile</p>
             </div>
 
             <div class="profile-info">
                 <div class="info-row">
                     <div class="info-label">Full Name</div>
-                    <div class="info-value"><%= customer.full_name if customer else 'Not provided'  %></div>
+                    <div class="info-value"><%= (customer) ? (customer.full_name) : ('Not provided') %></div>
                 </div>
                 <div class="info-row">
                     <div class="info-label">Email</div>
-                    <div class="info-value"><%= customer.email if customer else 'Not provided'  %></div>
+                    <div class="info-value"><%= (customer) ? (customer.email) : ('Not provided') %></div>
                 </div>
                 <div class="info-row">
                     <div class="info-label">Phone</div>
-                    <div class="info-value"><%= customer.phone if customer else 'Not provided'  %></div>
+                    <div class="info-value"><%= (customer) ? (customer.phone) : ('Not provided') %></div>
                 </div>
                 <div class="info-row">
                     <div class="info-label">Address</div>
-                    <div class="info-value"><%= customer.address if customer and customer.address else 'Not provided'  %>
+                    <div class="info-value"><%= (customer && customer.address) ? (customer.address) : ('Not provided') %>
                     </div>
                 </div>
                 <div class="info-row">
                     <div class="info-label">City</div>
-                    <div class="info-value"><%= customer.city if customer and customer.city else 'Not provided'  %></div>
+                    <div class="info-value"><%= (customer && customer.city) ? (customer.city) : ('Not provided') %></div>
                 </div>
                 <div class="info-row">
                     <div class="info-label">State</div>
-                    <div class="info-value"><%= customer.state if customer and customer.state else 'Not provided'  %>
+                    <div class="info-value"><%= (customer && customer.state) ? (customer.state) : ('Not provided') %>
                     </div>
                 </div>
                 <div class="info-row">
                     <div class="info-label">PIN Code</div>
-                    <div class="info-value"><%= customer.pincode if customer and customer.pincode else 'Not provided'  %>
+                    <div class="info-value"><%= (customer && customer.pincode) ? (customer.pincode) : ('Not provided') %>
                     </div>
                 </div>
                 <div class="info-row">
                     <div class="info-label">Home Location</div>
                     <div class="info-value">
-                        <% if (customer and customer.home_latitude and customer.home_longitude) { %>
-                        <span>📍 <%= customer.home_latitude  %>, <%= customer.home_longitude  %></span>
+                        <% if (customer && customer.home_latitude && customer.home_longitude) { %>
+                        <span>📍 <%= customer.home_latitude %>, <%= customer.home_longitude %></span>
                         <% } else { %>
                         <span>Not set</span>
                         <% } %>
                         <button onclick="setHomeLocation()"
-                            style="margin-left:10px;padding:5px 10px;background:#27ae60;color:white;border:none;border-radius:5px;cursor:pointer;"><%= 'Update' if customer and customer.home_latitude else 'Set'  %> Home Location</button>
+                            style="margin-left:10px;padding:5px 10px;background:#27ae60;color:white;border:none;border-radius:5px;cursor:pointer;"><%= (customer && customer.home_latitude) ? ('Update') : ('Set') %> Home Location</button>
                     </div>
                 </div>
                 <div class="info-row">
                     <div class="info-label">Current Location</div>
                     <div class="info-value">
-                        <% if (customer and customer.current_latitude and customer.current_longitude) { %>
-                        <span>📍 <%= customer.current_latitude  %>, <%= customer.current_longitude  %></span>
+                        <% if (customer && customer.current_latitude && customer.current_longitude) { %>
+                        <span>📍 <%= customer.current_latitude %>, <%= customer.current_longitude %></span>
                         <% } else { %>
                         <span>Not set</span>
                         <% } %>
@@ -400,7 +400,7 @@
                 </div>
                 <div class="info-row">
                     <div class="info-label">Member Since</div>
-                    <div class="info-value"><%= customer.id if customer else 'N/A'  %></div>
+                    <div class="info-value"><%= (customer) ? (customer.id) : ('N/A') %></div>
                 </div>
             </div>
 
@@ -444,7 +444,7 @@
             window.location.href = '/logout';
         }
 
-        const userId = '<%= user_id  %>';
+        const userId = '<%= user_id %>';
 
         // Clear ALL localStorage if different user logs in
         const lastUserId = localStorage.getItem('lastUserId');
@@ -469,7 +469,7 @@
                 avatar.style.backgroundPosition = 'center';
                 avatar.textContent = '';
             } else {
-                avatar.textContent = '<%= customer.full_name|first|upper if customer else "U"  %>';
+                avatar.textContent = '<%= (customer) ? (customer.full_name|first.toUpperCase()) : ("U") %>';
             }
         });
 
@@ -507,20 +507,20 @@
                     </div>
                     <div class="info-row">
                         <div class="info-label">Full Name</div>
-                        <div class="info-value"><input type="text" id="fullName" value="<%= customer.full_name if customer else ''  %>" style="width:100%;padding:8px;border:1px solid #ddd;border-radius:5px;"></div>
+                        <div class="info-value"><input type="text" id="fullName" value="<%= (customer) ? (customer.full_name) : ('') %>" style="width:100%;padding:8px;border:1px solid #ddd;border-radius:5px;"></div>
                     </div>
                     <div class="info-row">
                         <div class="info-label">Email</div>
-                        <div class="info-value"><input type="email" id="email" value="<%= customer.email if customer else ''  %>" style="width:100%;padding:8px;border:1px solid #ddd;border-radius:5px;"></div>
+                        <div class="info-value"><input type="email" id="email" value="<%= (customer) ? (customer.email) : ('') %>" style="width:100%;padding:8px;border:1px solid #ddd;border-radius:5px;"></div>
                     </div>
                     <div class="info-row">
                         <div class="info-label">Phone</div>
-                        <div class="info-value"><input type="tel" id="phone" value="<%= customer.phone if customer else ''  %>" style="width:100%;padding:8px;border:1px solid #ddd;border-radius:5px;"></div>
+                        <div class="info-value"><input type="tel" id="phone" value="<%= (customer) ? (customer.phone) : ('') %>" style="width:100%;padding:8px;border:1px solid #ddd;border-radius:5px;"></div>
                     </div>
                     <div class="info-row">
                         <div class="info-label">Address</div>
                         <div class="info-value">
-                            <textarea id="address" placeholder="Enter your delivery address" style="width:100%;padding:8px;border:1px solid #ddd;border-radius:5px;min-height:60px;resize:vertical;"><%= customer.address if customer else ''  %></textarea>
+                            <textarea id="address" placeholder="Enter your delivery address" style="width:100%;padding:8px;border:1px solid #ddd;border-radius:5px;min-height:60px;resize:vertical;"><%= (customer) ? (customer.address) : ('') %></textarea>
                             <button onclick="getCurrentLocation()" style="margin-top:8px;padding:8px 12px;background:#27ae60;color:white;border:none;border-radius:5px;cursor:pointer;">
                                 <i class="fa-solid fa-location-crosshairs"></i> Use Current Location
                             </button>
@@ -528,15 +528,15 @@
                     </div>
                     <div class="info-row">
                         <div class="info-label">City</div>
-                        <div class="info-value"><input type="text" id="city" value="<%= customer.city if customer else ''  %>" style="width:100%;padding:8px;border:1px solid #ddd;border-radius:5px;"></div>
+                        <div class="info-value"><input type="text" id="city" value="<%= (customer) ? (customer.city) : ('') %>" style="width:100%;padding:8px;border:1px solid #ddd;border-radius:5px;"></div>
                     </div>
                     <div class="info-row">
                         <div class="info-label">State</div>
-                        <div class="info-value"><input type="text" id="state" value="<%= customer.state if customer else ''  %>" style="width:100%;padding:8px;border:1px solid #ddd;border-radius:5px;"></div>
+                        <div class="info-value"><input type="text" id="state" value="<%= (customer) ? (customer.state) : ('') %>" style="width:100%;padding:8px;border:1px solid #ddd;border-radius:5px;"></div>
                     </div>
                     <div class="info-row">
                         <div class="info-label">PIN Code</div>
-                        <div class="info-value"><input type="text" id="pincode" value="<%= customer.pincode if customer else ''  %>" pattern="[0-9]{6}" style="width:100%;padding:8px;border:1px solid #ddd;border-radius:5px;"></div>
+                        <div class="info-value"><input type="text" id="pincode" value="<%= (customer) ? (customer.pincode) : ('') %>" pattern="[0-9]{6}" style="width:100%;padding:8px;border:1px solid #ddd;border-radius:5px;"></div>
                     </div>
                 `;
             } else {

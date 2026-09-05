@@ -14,7 +14,7 @@
         src="https://cdn.jsdelivr.net/npm/leaflet-polylinedecorator@1.6.0/dist/leaflet.polylineDecorator.min.js"></script>
 </head>
 
-<body data-user-id="<%= user_id  %>">
+<body data-user-id="<%= user_id %>">
     <header class="navbar">
         <div class="nav-container">
             <div class="logo">
@@ -67,35 +67,31 @@
     </header>
     <main class="content-wrapper">
         <div class="orders-container">
-            <h2 class="page-title enhanced-title">My Orders <span class="orders-count"><%= orders_query.length if
-                    orders_query else 0  %></span></h2>
+            <h2 class="page-title enhanced-title">My Orders <span class="orders-count"><%= (orders_query) ? (orders_query.length) : (0) %></span></h2>
             <div class="orders-list" id="orders-list">
                 <% if (orders_query) { %>
                 <% if (orders_query && orders_query.length) { orders_query.forEach(function(order) { %>
-                <div class="order-card enhanced-order-card" onclick="showOrderDetails(<%= order.id  %>)">
+                <div class="order-card enhanced-order-card" onclick="showOrderDetails(<%= order.id %>)">
                     <div
-                        class="order-status-indicator <%= 'delivered' if order.status == 'Completed' else order.status  %>">
+                        class="order-status-indicator <%= (order.status == 'Completed') ? ('delivered') : (order.status) %>">
                     </div>
                     <div class="order-header">
                         <div class="order-info">
-                            <h4><span class="order-number">#<%= order.id  %></span></h4>
-                            <p class="vendor-name"><i class="fa-solid fa-store"></i> <%= order.vendor_name  %></p>
+                            <h4><span class="order-number">#<%= order.id %></span></h4>
+                            <p class="vendor-name"><i class="fa-solid fa-store"></i> <%= order.vendor_name %></p>
                         </div>
                         <div class="order-status">
                             <span
-                                class="status-badge enhanced-status <%= 'delivered' if order.status == 'Completed' else order.status  %>"><%= 'Delivered' if order.status == 'Completed' else order.status|replace('_', ' ')|title
-                                 %></span>
-                            <span class="order-total enhanced-total"><i class="fa-solid fa-indian-rupee-sign"></i><%= order.total  %></span>
+                                class="status-badge enhanced-status <%= (order.status == 'Completed') ? ('delivered') : (order.status) %>"><%= (order.status == 'Completed') ? ('Delivered') : (order.status.replace('_', ' ')) %></span>
+                            <span class="order-total enhanced-total"><i class="fa-solid fa-indian-rupee-sign"></i><%= order.total %></span>
                         </div>
                     </div>
                     <div class="order-items enhanced-items">
-                        <p><i class="fa-solid fa-utensils"></i> <% if (order.get_items()) { (order.get_items()).forEach(item => { %><%= item.name  %> x<%= item.qty  %><% if (not loop.last) { %>, <% } %><% }); } %></p>
+                        <p><i class="fa-solid fa-utensils"></i> <% if (order.get_items()) { (order.get_items()).forEach(item => { %><%= item.name %> x<%= item.qty %><% if (!(index === (arr ? arr.length - 1 : 0))) { %>, <% } %><% }); } %></p>
                     </div>
                     <div class="order-meta enhanced-meta">
-                        <span class="order-type"><%= '🚚 Delivery' if order.delivery_type == 'delivery' else '🏪
-                            Takeaway'  %><% if (order.delivery_type == 'delivery' and order.delivery_location_type) { %> (<%= 'Home' if order.delivery_location_type == 'home' else 'Current Location'  %>)<% } %></span>
-                        <span class="order-date" data-timestamp="<%= order.created_at.timestamp()  %>"><%= order.created_at.strftime('%b %d, %Y %I:%M %p')  %> | <%= order.created_at.strftime('%H:%M')
-                             %></span>
+                        <span class="order-type"><%= (order.delivery_type == 'delivery') ? ('🚚 Delivery') : ('🏪 Takeaway') %><% if (order.delivery_type == 'delivery' && order.delivery_location_type) { %> (<%= (order.delivery_location_type == 'home') ? ('Home') : ('Current Location') %>)<% } %></span>
+                        <span class="order-date" data-timestamp="<%= order.created_at.getTime() %>"><%= order.created_at.toLocaleDateString() %> | <%= order.created_at.toLocaleDateString() %></span>
                     </div>
                 </div>
                 <% }); } %>
@@ -198,7 +194,7 @@
         updateCurrentTime();
         setInterval(updateCurrentTime, 1000);
 
-        const ordersData = <%= orders |dump | safe  %>;
+        const ordersData = <%= orders |dump | safe %>;
         const orders = ordersData.map(o => ({
             id: o.id,
             vendor: o.vendor_name,
@@ -234,7 +230,7 @@
                     <h4>${order.vendor}</h4>
                     <p class="order-date" data-timestamp="${new Date(order.date).getTime() / 1000}">${new Date(order.date).toLocaleString()}</p>
                     <div class="status-info">
-                        <span class="status-badge ${order.status}">${order.status === 'Completed' ? 'Delivered' : order.status === 'Rejected' ? 'Rejected' : order.status|replace('_',' '))}</span>
+                        <span class="status-badge ${order.status}">${order.status === 'Completed' ? 'Delivered' : order.status === 'Rejected' ? 'Rejected' : order.status.replace('_',' ')}</span>
                         <span class="order-type">${order.deliveryType === 'delivery' ? '🚚 Delivery' : '🏪 Takeaway'}${order.deliveryType === 'delivery' && order.deliveryLocationType ? ` (${order.deliveryLocationType === 'home' ? 'Home' : 'Current Location'})` : ''}</span>
                         ${order.status === 'ready' ? `<span style="background:#27ae60;color:white;padding:8px 15px;border-radius:20px;font-weight:600;margin-top:10px;display:inline-block;">${order.deliveryType === 'delivery' ? '✓ Ready to Deliver' : '✓ Ready to Take'}</span>` : ''}
                         ${order.status === 'Rejected' && order.rejectionReason ? `<div style="background:#ffebee;color:#c62828;padding:10px;border-radius:8px;margin-top:10px;border-left:4px solid #f44336;"><strong>Rejection Reason:</strong><br>${order.rejectionReason}</div>` : ''}
@@ -341,8 +337,7 @@
 
         function getVendorIdFromOrder(order) {
             // Find vendor ID by matching vendor name from the orders data
-            const orderData = <%= orders |dump | safe
-         %>;
+            const orderData = <%= orders |dump | safe %>;
         const matchingOrder = orderData.find(o => o.id === order.id);
         return matchingOrder ? matchingOrder.vendor_id : null;
         }
@@ -523,7 +518,7 @@
                     <div style="background:#f8f9fa;padding:15px;border-radius:10px;margin-bottom:20px;">
                         <p><strong>Estimated Delivery:</strong> 25-30 minutes</p>
                         <p><strong>Delivery Address:</strong> Your Location</p>
-                        <p><strong>Current Status:</strong> <span style="color:#27ae60;font-weight:600;">${order.status|replace('_',' ')).replace(/\b\w/g, l => l.toUpperCase())}</span></p>
+                        <p><strong>Current Status:</strong> <span style="color:#27ae60;font-weight:600;">${order.status.replace('_',' ').replace(/\b\w/g, l => l.toUpperCase())}</span></p>
                     </div>
                     <div style="display:flex;flex-direction:column;gap:20px;">
                         ${steps.map(step => `

@@ -21,15 +21,15 @@ Menu Management
 
     <div class="menu-items-grid">
         <% if (items && items.length) { items.forEach(function(item) { %>
-        <div class="menu-item-card <% if (not item.is_available) { %>unavailable<% } %>" data-item-id="<%= item.id  %>">
+        <div class="menu-item-card <% if (!item.is_available) { %>unavailable<% } %>" data-item-id="<%= item.id %>">
             <div class="item-image-container">
-                <img src="<%= url_for('static', filename='images/food/' + (item.image_file if item.image_file else 'default.jpg'))  %>"
-                    class="item-image" alt="<%= item.name  %>"
+                <img src="<%= (item.image_file) ? ('/static/images/food/' + item.image_file) : ('/static/images/food/default.jpg') %>"
+                    class="item-image" alt="<%= item.name %>"
                     onerror="this.src='https://via.placeholder.com/300x200?text=No+Image'">
                 <div class="availability-toggle">
                     <label class="switch">
                         <input type="checkbox" <% if (item.is_available) { %>checked<% } %>
-                            onchange="toggleAvailability(<%= item.id  %>, this)">
+                            onchange="toggleAvailability(<%= item.id %>, this)">
                         <span class="slider round"></span>
                     </label>
                 </div>
@@ -37,33 +37,33 @@ Menu Management
 
             <div class="item-details">
                 <div class="item-header">
-                    <h4 class="item-name"><%= item.name  %></h4>
-                    <span class="category-badge <%= item.category|lower  %>">
-                        <%= item.category  %>
+                    <h4 class="item-name"><%= item.name %></h4>
+                    <span class="category-badge <%= item.category.toLowerCase() %>">
+                        <%= item.category %>
                     </span>
                 </div>
 
                 <% if (item.sub_name) { %>
-                <p class="item-description"><%= item.sub_name  %></p>
+                <p class="item-description"><%= item.sub_name %></p>
                 <% } %>
 
                 <div class="item-footer">
                     <div class="price-section">
-                        <span class="price">₹<%= item.price  %></span>
+                        <span class="price">₹<%= item.price %></span>
                     </div>
 
                     <div class="action-buttons">
-                        <button class="btn-edit" onclick="openEditModal(<%= item.id  %>)" title="Edit Item">
+                        <button class="btn-edit" onclick="openEditModal(<%= item.id %>)" title="Edit Item">
                             <i class="fa-solid fa-pen"></i>
                         </button>
-                        <button class="btn-delete" onclick="deleteItem(<%= item.id  %>)" title="Delete Item">
+                        <button class="btn-delete" onclick="deleteItem(<%= item.id %>)" title="Delete Item">
                             <i class="fa-solid fa-trash"></i>
                         </button>
                     </div>
                 </div>
             </div>
         </div>
-        <% } else { %>
+        <% }); } else { %>
         <div class="empty-state">
             <i class="fa-solid fa-utensils"></i>
             <h4>No Menu Items Yet</h4>
@@ -72,7 +72,7 @@ Menu Management
                 <i class="fa-solid fa-plus"></i> Add Your First Item
             </button>
         </div>
-        <% }); } %>
+        <% } %>
     </div>
 </div>
 

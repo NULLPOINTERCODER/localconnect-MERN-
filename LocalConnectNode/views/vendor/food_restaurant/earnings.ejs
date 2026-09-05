@@ -19,7 +19,7 @@ Earnings
                 <p>Total Earnings</p>
                 <div class="card-trend positive">
                     <i class="fa-solid fa-arrow-up"></i>
-                    <span><%= total_orders  %> orders</span>
+                    <span><%= total_orders %> orders</span>
                 </div>
             </div>
         </div>
@@ -60,7 +60,7 @@ Earnings
                 <h3>₹{{ "{:,.2f}".format(today_earnings) }}</h3>
                 <p>Today</p>
                 <div class="card-info">
-                    <span class="pending-orders"><%= pending_orders  %> pending orders</span>
+                    <span class="pending-orders"><%= pending_orders %> pending orders</span>
                 </div>
             </div>
         </div>
@@ -73,7 +73,7 @@ Earnings
             <div class="stat-label">Avg Order Value</div>
         </div>
         <div class="stat-item">
-            <div class="stat-value"><%= completed_orders  %></div>
+            <div class="stat-value"><%= completed_orders %></div>
             <div class="stat-label">Completed Orders</div>
         </div>
         <div class="stat-item">
@@ -81,7 +81,7 @@ Earnings
             <div class="stat-label">Completion Rate</div>
         </div>
         <div class="stat-item">
-            <div class="stat-value"><%= top_category  %></div>
+            <div class="stat-value"><%= top_category %></div>
             <div class="stat-label">Top Category</div>
         </div>
     </div>
@@ -125,22 +125,22 @@ Earnings
                 <tbody>
                     <% if (earnings_history.slice(0, 10)) { (earnings_history.slice(0, 10)).forEach(order => { %>
                     <tr>
-                        <td>#<%= order.id  %></td>
-                        <td><%= order.customer_name  %></td>
-                        <td><%= order.created_at.strftime('%d %b %Y')  %></td>
-                        <td>₹<%= order.total  %></td>
+                        <td>#<%= order.id %></td>
+                        <td><%= order.customer_name %></td>
+                        <td><%= order.created_at.toLocaleDateString() %></td>
+                        <td>₹<%= order.total %></td>
                         <td>
-                            <span class="status-badge <%= order.status|lower  %>"><%= order.status  %></span>
+                            <span class="status-badge <%= order.status.toLowerCase() %>"><%= order.status %></span>
                         </td>
                     </tr>
-                    <% } else { %>
+                    <% }); } else { %>
                     <tr>
                         <td colspan="5" class="empty-state">
                             <i class="fa-solid fa-receipt"></i>
                             <p>No orders found.</p>
                         </td>
                     </tr>
-                    <% }); } %>
+                    <% } %>
                 </tbody>
             </table>
         </div>
@@ -154,11 +154,11 @@ Earnings
     
     // Default data
     const defaultData = {
-        labels: <%= chart_labels|dump  %>,
-        values: <%= chart_values|dump  %>,
-        total: <%= week_earnings  %>,
-        average: <%= week_earnings/7  %>,
-        peak: Math.max(...<%= chart_values|dump  %>)
+        labels: <%= chart_labels|dump %>,
+        values: <%= chart_values|dump %>,
+        total: <%= week_earnings %>,
+        average: <%= week_earnings/7 %>,
+        peak: Math.max(...<%= chart_values|dump %>)
     };
     
     // Function to fetch dynamic data from backend

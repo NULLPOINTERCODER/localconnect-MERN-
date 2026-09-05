@@ -15,11 +15,11 @@ Earnings
                 <i class="fa-solid fa-wallet"></i>
             </div>
             <div class="card-content">
-                <h3>₹<%= total_earnings  %></h3>
+                <h3>₹<%= total_earnings %></h3>
                 <p>Total Earnings</p>
                 <div class="card-trend positive">
                     <i class="fa-solid fa-arrow-up"></i>
-                    <span><%= total_orders  %> orders</span>
+                    <span><%= total_orders %> orders</span>
                 </div>
             </div>
         </div>
@@ -29,11 +29,11 @@ Earnings
                 <i class="fa-solid fa-calendar-month"></i>
             </div>
             <div class="card-content">
-                <h3>₹<%= month_earnings  %></h3>
+                <h3>₹<%= month_earnings %></h3>
                 <p>This Month</p>
                 <div class="card-trend positive">
                     <i class="fa-solid fa-arrow-up"></i>
-                    <span>+<%= month_growth  %>%</span>
+                    <span>+<%= month_growth %>%</span>
                 </div>
             </div>
         </div>
@@ -43,11 +43,11 @@ Earnings
                 <i class="fa-solid fa-calendar-week"></i>
             </div>
             <div class="card-content">
-                <h3>₹<%= week_earnings  %></h3>
+                <h3>₹<%= week_earnings %></h3>
                 <p>This Week</p>
                 <div class="card-trend positive">
                     <i class="fa-solid fa-arrow-up"></i>
-                    <span>+<%= week_growth  %>%</span>
+                    <span>+<%= week_growth %>%</span>
                 </div>
             </div>
         </div>
@@ -57,10 +57,10 @@ Earnings
                 <i class="fa-solid fa-calendar-day"></i>
             </div>
             <div class="card-content">
-                <h3>₹<%= today_earnings  %></h3>
+                <h3>₹<%= today_earnings %></h3>
                 <p>Today</p>
                 <div class="card-info">
-                    <span class="pending-orders"><%= pending_orders  %> pending orders</span>
+                    <span class="pending-orders"><%= pending_orders %> pending orders</span>
                 </div>
             </div>
         </div>
@@ -69,19 +69,19 @@ Earnings
     <!-- Quick Stats Row -->
     <div class="quick-stats">
         <div class="stat-item">
-            <div class="stat-value">₹<%= avg_order_value  %></div>
+            <div class="stat-value">₹<%= avg_order_value %></div>
             <div class="stat-label">Avg Order Value</div>
         </div>
         <div class="stat-item">
-            <div class="stat-value"><%= completed_orders  %></div>
+            <div class="stat-value"><%= completed_orders %></div>
             <div class="stat-label">Completed Orders</div>
         </div>
         <div class="stat-item">
-            <div class="stat-value"><%= completion_rate  %>%</div>
+            <div class="stat-value"><%= completion_rate %>%</div>
             <div class="stat-label">Completion Rate</div>
         </div>
         <div class="stat-item">
-            <div class="stat-value"><%= top_category  %></div>
+            <div class="stat-value"><%= top_category %></div>
             <div class="stat-label">Top Category</div>
         </div>
     </div>
@@ -119,22 +119,22 @@ Earnings
                 <tbody>
                     <% if (earnings_history && earnings_history.length) { earnings_history.forEach(function(order) { %>
                     <tr>
-                        <td>#<%= order.id  %></td>
-                        <td><%= order.customer_name  %></td>
-                        <td><%= order.created_at.strftime('%d %b %Y')  %></td>
-                        <td>₹<%= order.total  %></td>
+                        <td>#<%= order.id %></td>
+                        <td><%= order.customer_name %></td>
+                        <td><%= order.created_at.toLocaleDateString() %></td>
+                        <td>₹<%= order.total %></td>
                         <td>
-                            <span class="status-badge <%= order.status|lower  %>"><%= order.status  %></span>
+                            <span class="status-badge <%= order.status.toLowerCase() %>"><%= order.status %></span>
                         </td>
                     </tr>
-                    <% } else { %>
+                    <% }); } else { %>
                     <tr>
                         <td colspan="5" class="empty-state">
                             <i class="fa-solid fa-receipt"></i>
                             <p>No orders found.</p>
                         </td>
                     </tr>
-                    <% }); } %>
+                    <% } %>
                 </tbody>
             </table>
         </div>
@@ -143,8 +143,8 @@ Earnings
 
 <script>
     const chartData = {
-        labels: <%= chart_labels|dump  %>,
-        values: <%= chart_values|dump  %>
+        labels: <%= chart_labels|dump %>,
+        values: <%= chart_values|dump %>
     };
 </script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

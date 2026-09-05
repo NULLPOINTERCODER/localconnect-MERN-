@@ -18,26 +18,26 @@
             </div>
             <nav>
                 <ul>
-                    <li class="<%= 'active' if request.path == '/vendor/dashboard'  %>">
+                    <li class="<%= request.path === '/vendor/dashboard' ? 'active' : '' %>">
                         <a href="/vendor/dashboard"><i class="fa-solid fa-desktop"></i> Dashboard</a>
                     </li>
-                    <li class="<%= 'active' if request.path == '/vendor/orders'  %>">
+                    <li class="<%= request.path === '/vendor/orders' ? 'active' : '' %>">
                         <a href="/vendor/orders"><i class="fa-regular fa-file-lines"></i> Orders</a>
                     </li>
-                    <li class="<%= 'active' if request.path == '/vendor/delivery-map'  %>">
+                    <li class="<%= request.path === '/vendor/delivery-map' ? 'active' : '' %>">
                         <a href="/vendor/delivery-map"><i class="fa-solid fa-map"></i> Delivery Map</a>
                     </li>
-                    <li class="<%= 'active' if request.path == '/vendor/menu'  %>">
-                        <a href="/vendor/menu"><i class="fa-solid <%= labels.icon if labels else 'fa-utensils'  %>"></i>
-                            <%= labels.inventory if labels else 'Menu'  %> Management</a>
+                    <li class="<%= request.path === '/vendor/menu' ? 'active' : '' %>">
+                        <a href="/vendor/menu"><i class="fa-solid <%= (labels) ? (labels.icon) : ('fa-utensils') %>"></i>
+                            <%= (labels) ? (labels.inventory) : ('Menu') %> Management</a>
                     </li>
-                    <li class="<%= 'active' if request.path == '/vendor/earnings'  %>">
+                    <li class="<%= request.path === '/vendor/earnings' ? 'active' : '' %>">
                         <a href="/vendor/earnings"><i class="fa-solid fa-indian-rupee-sign"></i> Earnings</a>
                     </li>
-                    <li class="<%= 'active' if request.path == '/vendor/reviews'  %>">
+                    <li class="<%= request.path === '/vendor/reviews' ? 'active' : '' %>">
                         <a href="/vendor/reviews"><i class="fa-regular fa-star"></i> Reviews</a>
                     </li>
-                    <li class="<%= 'active' if request.path == '/vendor/settings'  %>">
+                    <li class="<%= request.path === '/vendor/settings' ? 'active' : '' %>">
                         <a href="/vendor/settings"><i class="fa-solid fa-gear"></i> Settings</a>
                     </li>
                 </ul>
@@ -54,10 +54,9 @@
                     <div class="page-title-section">
                         <h2 id="page-title"></h2>
                         <div
-                            class="status-indicator <%= 'open' if vendor_profile and vendor_profile.is_open else 'closed'  %>">
+                            class="status-indicator <%= (vendor_profile && vendor_profile.is_open) ? ('open') : ('closed') %>">
                             <span class="status-dot"></span>
-                            <span class="status-text"><%= 'Open' if vendor_profile and vendor_profile.is_open else
-                                'Closed'  %></span>
+                            <span class="status-text"><%= (vendor_profile && vendor_profile.is_open) ? ('Open') : ('Closed') %></span>
                         </div>
                     </div>
                 </div>
@@ -69,13 +68,13 @@
                                 aria-label="Notifications">
                                 <i class="fa-regular fa-bell"></i>
                                 <% if (unread_count > 0) { %>
-                                <span class="notification-badge"><%= unread_count  %></span>
+                                <span class="notification-badge"><%= unread_count %></span>
                                 <% } %>
                             </button>
                             <div id="notif-content" class="dropdown-content notification-dropdown">
                                 <div class="dropdown-header">
                                     <span>Notifications</span>
-                                    <span class="notification-count"><%= unread_count or 0  %></span>
+                                    <span class="notification-count"><%= unread_count || 0 %></span>
                                 </div>
                                 <div class="notification-list" id="notificationList">
                                     <!-- Dynamic notifications will be loaded here -->
@@ -88,12 +87,11 @@
 
                         <div class="shop-status-toggle">
                             <div class="toggle-switch premium">
-                                <input type="checkbox" id="header_shop_status" <%= 'checked' if vendor_profile and
-                                    vendor_profile.is_open else ''  %> onchange="toggleShopStatus(this)">
+                                <input type="checkbox" id="header_shop_status" <%= (vendor_profile &&
+                                    vendor_profile.is_open) ? ('checked') : ('') %> onchange="toggleShopStatus(this)">
                                 <label for="header_shop_status" class="switch-label" aria-label="Toggle shop status">
                                     <span class="switch-slider"></span>
-                                    <span class="switch-text"><%= 'Open' if vendor_profile and vendor_profile.is_open
-                                        else 'Closed'  %></span>
+                                    <span class="switch-text"><%= (vendor_profile && vendor_profile.is_open) ? ('Open') : ('Closed') %></span>
                                 </label>
                             </div>
                         </div>
@@ -104,18 +102,18 @@
                                 <div class="profile-avatar" id="headerShopImage"
                                     onclick="event.stopPropagation(); showShopImageModal();" style="cursor: pointer;"
                                     title="Click to change profile image">
-                                    <% if (vendor_profile and vendor_profile.shop_image) { %>
-                                    <% if (vendor_profile.shop_image | replace('\1', '') | trim | length < vendor_profile.shop_image.length) { %>
-                                    <img src="<%= vendor_profile.shop_image  %>"
+                                    <% if (vendor_profile && vendor_profile.shop_image) { %>
+                                    <% if (vendor_profile.shop_image.replace('\1', '').trim().length < vendor_profile.shop_image.length) { %>
+                                    <img src="<%= vendor_profile.shop_image %>"
                                         style="width:100%;height:100%;object-fit:cover;border-radius:50%;"
                                         onerror="this.innerHTML='🏪';">
-                                    <% } else if (vendor_profile.shop_image.length < 5) { %> <%= vendor_profile.shop_image  %> <% } else { %> 🏪 <% } %> <% } else { %> 🏪 <% } %> </div>
+                                    <% } else if (vendor_profile.shop_image.length < 5) { %> <%= vendor_profile.shop_image %> <% } else { %> 🏪 <% } %> <% } else { %> 🏪 <% } %> </div>
                                         <div class="profile-info">
                                             <span class="profile-name">
-                                                <% if (vendor_profile and vendor_profile.business_name) { %>
-                                                <%= vendor_profile.business_name.slice(0, 15)  %>{% if
+                                                <% if (vendor_profile && vendor_profile.business_name) { %>
+                                                <%= vendor_profile.business_name.slice(0, 15) %><% if (
                                                 vendor_profile.business_name.length
-                                                > 15 %}...<% } %>
+                                                > 15) { %>...<% } %>
                                                 <% } else { %>
                                                 Localconnect
                                                 <% } %>
@@ -129,24 +127,21 @@
                                         <div class="profile-avatar large" id="dropdownShopImage"
                                             onclick="showShopImageModal()" style="cursor: pointer;"
                                             title="Click to change image">
-                                            <% if (vendor_profile and vendor_profile.shop_image) { %>
+                                            <% if (vendor_profile && vendor_profile.shop_image) { %>
                                             <% if (vendor_profile.shop_image | replace('\1', '') | trim | length < vendor_profile.shop_image.length) { %>
-                                            <img src="<%= vendor_profile.shop_image  %>"
+                                            <img src="<%= vendor_profile.shop_image %>"
                                                 style="width:100%;height:100%;object-fit:cover;border-radius:50%;"
                                                 onerror="this.innerHTML='🏪';">
-                                            <% } else if (vendor_profile.shop_image.length < 5) { %> <%= vendor_profile.shop_image
-                                                 %> <% } else { %> 🏪 <% } %> <% } else { %> 🏪 <% } %> </div>
+                                            <% } else if (vendor_profile.shop_image.length < 5) { %> <%= vendor_profile.shop_image %> <% } else { %> 🏪 <% } %> <% } else { %> 🏪 <% } %> </div>
                                                 <div class="profile-details">
                                                     <span class="profile-name">
-                                                        <% if (vendor_profile and vendor_profile.business_name) { %>
-                                                        <%= vendor_profile.business_name  %>
+                                                        <% if (vendor_profile && vendor_profile.business_name) { %>
+                                                        <%= vendor_profile.business_name %>
                                                         <% } else { %>
                                                         Localconnect Shop
                                                         <% } %>
                                                     </span>
-                                                    <span class="profile-email"><%= vendor_profile.email if
-                                                        vendor_profile else
-                                                        'vendor@localconnect.com'  %></span>
+                                                    <span class="profile-email"><%= (vendor_profile) ? (vendor_profile.email) : ('vendor@localconnect.com') %></span>
                                                 </div>
                                         </div>
                                         <div class="dropdown-divider"></div>

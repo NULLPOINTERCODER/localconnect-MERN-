@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invoice #<%= order.id  %> - LocalConnect</title>
+    <title>Invoice #<%= order.id %> - LocalConnect</title>
     <link rel="stylesheet" href="/static/css/customer/invoice.css">
     <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
@@ -19,8 +19,8 @@
             </div>
             <div class="invoice-info">
                 <h2>INVOICE</h2>
-                <p class="invoice-number">#<%= order.id  %></p>
-                <p class="invoice-date"><%= order.created_at.strftime('%B %d, %Y')  %></p>
+                <p class="invoice-number">#<%= order.id %></p>
+                <p class="invoice-date"><%= order.created_at.toLocaleDateString() %></p>
             </div>
         </div>
 
@@ -30,7 +30,7 @@
                 <div class="card-icon">📅</div>
                 <div class="card-content">
                     <p class="card-label">Order Date</p>
-                    <p class="card-value"><%= order.created_at.strftime('%d %b %Y, %I:%M %p')  %></p>
+                    <p class="card-value"><%= order.created_at.toLocaleDateString() %></p>
                 </div>
             </div>
             <div class="summary-card">
@@ -43,16 +43,14 @@
             <div class="summary-card">
                 <div class="card-icon">💳</div>
                 <div class="card-content">
-                    <p class="card-label">Payment Method</p>
-                    <p class="card-value"><%= 'Online Payment' if order.payment_type == 'online' else 'Cash on ' +
-                        ('Delivery' if order.delivery_type == 'delivery' else 'Pickup')  %></p>
+                    <p class="payment-method"><%= (order.payment_type == 'online') ? 'Online Payment' : ('Cash on ' + (order.delivery_type == 'delivery' ? 'Delivery' : 'Pickup')) %></p>
                 </div>
             </div>
             <div class="summary-card">
                 <div class="card-icon">🛍️</div>
                 <div class="card-content">
                     <p class="card-label">Total Items</p>
-                    <p class="card-value"><%= item_count  %></p>
+                    <p class="card-value"><%= item_count %></p>
                 </div>
             </div>
         </div>
@@ -62,26 +60,26 @@
             <div class="party-card vendor-card">
                 <h3>From (Vendor)</h3>
                 <div class="party-info">
-                    <p class="party-name"><%= vendor.business_name  %></p>
-                    <p><%= vendor.business_address  %></p>
-                    <p><strong>Phone:</strong> <%= vendor.phone  %></p>
-                    <p><strong>Email:</strong> <%= vendor.email  %></p>
+                    <p class="party-name"><%= vendor.business_name %></p>
+                    <p><%= vendor.business_address %></p>
+                    <p><strong>Phone:</strong> <%= vendor.phone %></p>
+                    <p><strong>Email:</strong> <%= vendor.email %></p>
                 </div>
             </div>
             <div class="party-card customer-card">
                 <h3>To (Customer)</h3>
                 <div class="party-info">
-                    <p class="party-name"><%= customer.full_name  %></p>
+                    <p class="party-name"><%= customer.full_name %></p>
                     <% if (customer.address) { %>
-                    <p><%= customer.address  %><% if (customer.city) { %>, <%= customer.city  %><% } %></p>
-                    <% if (customer.state or customer.pincode) { %>
-                    <p><% if (customer.state) { %><%= customer.state  %><% } %><% if (customer.pincode) { %> - <%= customer.pincode  %><% } %></p>
+                    <p><%= customer.address %><% if (customer.city) { %>, <%= customer.city %><% } %></p>
+                    <% if (customer.state || customer.pincode) { %>
+                    <p><% if (customer.state) { %><%= customer.state %><% } %><% if (customer.pincode) { %> - <%= customer.pincode %><% } %></p>
                     <% } %>
                     <% } else { %>
                     <p>Address not provided</p>
                     <% } %>
-                    <p><strong>Phone:</strong> <%= customer.phone  %></p>
-                    <p><strong>Email:</strong> <%= customer.email  %></p>
+                    <p><strong>Phone:</strong> <%= customer.phone %></p>
+                    <p><strong>Email:</strong> <%= customer.email %></p>
                 </div>
             </div>
         </div>
@@ -102,22 +100,22 @@
                     <% if (items && items.length) { items.forEach(function(item) { %>
                     <tr>
                         <td>
-                            <span class="item-name"><%= item.name  %></span>
+                            <span class="item-name"><%= item.name %></span>
                             <% if (item.sub_name) { %>
-                            <span class="item-subname"><%= item.sub_name  %></span>
+                            <span class="item-subname"><%= item.sub_name %></span>
                             <% } %>
                         </td>
-                        <td><%= item.qty  %></td>
-                        <td>₹<%= item.price  %></td>
-                        <td>₹<%= item.price * item.qty  %></td>
+                        <td><%= item.qty %></td>
+                        <td>₹<%= item.price %></td>
+                        <td>₹<%= item.price * item.qty %></td>
                     </tr>
                     <% }); } %>
-                    <% if (order.discount_amount and order.discount_amount > 0) { %>
+                    <% if (order.discount_amount && order.discount_amount > 0) { %>
                     <tr class="discount-row">
                         <td colspan="3">
-                            <span class="discount-label">Discount Applied (<%= order.offer_title or 'Special Offer'  %>)</span>
+                            <span class="discount-label">Discount Applied (<%= order.offer_title || 'Special Offer' %>)</span>
                         </td>
-                        <td class="discount-amount">-₹<%= order.discount_amount  %></td>
+                        <td class="discount-amount">-₹<%= order.discount_amount %></td>
                     </tr>
                     <% } %>
                     <% if (order.delivery_type == 'delivery') { %>
@@ -137,11 +135,11 @@
             <div class="total-card">
                 <div class="total-row grand-total">
                     <span class="total-label">Grand Total</span>
-                    <span class="total-amount">₹<%= order.total  %></span>
+                    <span class="total-amount">₹<%= order.total %></span>
                 </div>
                 <div class="amount-words">
                     <p>Amount in words:</p>
-                    <p class="words-text"><%= amount_words  %></p>
+                    <p class="words-text"><%= amount_words %></p>
                 </div>
             </div>
         </div>

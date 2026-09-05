@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
-<body data-user-id="<%= user_id  %>">
+<body data-user-id="<%= user_id %>">
     <header class="navbar">
         <div class="nav-container">
             <div class="logo" onclick="window.location.href='/customer/dashboard'">
@@ -86,9 +86,9 @@
         </svg>
     </div>
     <script src="/static/js/customer/base.js"></script>
-    <script type="application/json" id="vendors-data"><%= vendors|dump | safe  %></script>
-    <script type="application/json" id="customer-lat"><%= customer_lat|dump | safe  %></script>
-    <script type="application/json" id="customer-lon"><%= customer_lon|dump | safe  %></script>
+    <script type="application/json" id="vendors-data"><%= vendors|dump | safe %></script>
+    <script type="application/json" id="customer-lat"><%= customer_lat|dump | safe %></script>
+    <script type="application/json" id="customer-lon"><%= customer_lon|dump | safe %></script>
     <script>
         function viewProfile() { window.location.href = '/customer/profile'; }
         function myOrders() { window.location.href = '/customer/orders'; }

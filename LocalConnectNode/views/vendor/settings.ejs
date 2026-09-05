@@ -28,11 +28,11 @@ Settings
             <div class="shop-profile-section">
                 <div class="shop-image-container" onclick="showShopImageOptions()">
                     <div class="shop-image" id="shopImage">
-                        <% if (vendor_profile and vendor_profile.shop_image) { %>
+                        <% if (vendor_profile && vendor_profile.shop_image) { %>
                             <% if (vendor_profile.shop_image | replace('\1', '') | trim | length < vendor_profile.shop_image.length) { %>
-                                <img src="<%= vendor_profile.shop_image  %>" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" onerror="this.innerHTML='🏪';">
+                                <img src="<%= vendor_profile.shop_image %>" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" onerror="this.innerHTML='🏪';">
                             <% } else if (vendor_profile.shop_image.length < 5) { %>
-                                <%= vendor_profile.shop_image  %>
+                                <%= vendor_profile.shop_image %>
                             <% } else { %>
                                 🏪
                             <% } %>
@@ -49,24 +49,24 @@ Settings
             <form action="/vendor/settings" method="POST" class="settings-form" onsubmit="return handleFormSubmit(event)">
                 <div class="form-group">
                     <label for="shop_name">Shop Name</label>
-                    <input type="text" id="shop_name" name="shop_name" value="<%= vendor_profile.business_name if vendor_profile else ''  %>" required onchange="updateNavbarName()">
+                    <input type="text" id="shop_name" name="shop_name" value="<%= (vendor_profile) ? (vendor_profile.business_name) : ('') %>" required onchange="updateNavbarName()">
                 </div>
                 
                 <div class="form-group">
                     <label for="shop_email">Email</label>
-                    <input type="email" id="shop_email" name="email" value="<%= vendor_profile.email if vendor_profile else ''  %>" required>
+                    <input type="email" id="shop_email" name="email" value="<%= (vendor_profile) ? (vendor_profile.email) : ('') %>" required>
                 </div>
 
                 <div class="form-group">
                     <label for="business_category">Shop Category</label>
                     <select id="business_category" name="business_category" required onchange="updateSubCategories()">
                         <option value="">Select Category</option>
-                        <option value="Food & Restaurant" <%= 'selected' if vendor_profile and vendor_profile.business_category == 'Food & Restaurant' else ''  %>>Food & Restaurant</option>
-                        <option value="Garage" <%= 'selected' if vendor_profile and vendor_profile.business_category == 'Garage' else ''  %>>Garage Services</option>
-                        <option value="Electronics" <%= 'selected' if vendor_profile and vendor_profile.business_category == 'Electronics' else ''  %>>Electronics</option>
-                        <option value="Fashion" <%= 'selected' if vendor_profile and vendor_profile.business_category == 'Fashion' else ''  %>>Fashion</option>
-                        <option value="Grocery" <%= 'selected' if vendor_profile and vendor_profile.business_category == 'Grocery' else ''  %>>Grocery</option>
-                        <option value="Pharmacy" <%= 'selected' if vendor_profile and vendor_profile.business_category == 'Pharmacy' else ''  %>>Pharmacy</option>
+                        <option value="Food & Restaurant" <%= (vendor_profile && vendor_profile.business_category == 'Food & Restaurant') ? ('selected') : ('') %>>Food & Restaurant</option>
+                        <option value="Garage" <%= (vendor_profile && vendor_profile.business_category == 'Garage') ? ('selected') : ('') %>>Garage Services</option>
+                        <option value="Electronics" <%= (vendor_profile && vendor_profile.business_category == 'Electronics') ? ('selected') : ('') %>>Electronics</option>
+                        <option value="Fashion" <%= (vendor_profile && vendor_profile.business_category == 'Fashion') ? ('selected') : ('') %>>Fashion</option>
+                        <option value="Grocery" <%= (vendor_profile && vendor_profile.business_category == 'Grocery') ? ('selected') : ('') %>>Grocery</option>
+                        <option value="Pharmacy" <%= (vendor_profile && vendor_profile.business_category == 'Pharmacy') ? ('selected') : ('') %>>Pharmacy</option>
                     </select>
                 </div>
 
@@ -74,21 +74,21 @@ Settings
                     <label for="business_sub_category">Sub-Category</label>
                     <select id="business_sub_category" name="business_sub_category" required>
                         <option value="">Select Sub-Category</option>
-                        <% if (vendor_profile and vendor_profile.business_sub_category) { %>
-                            <option value="<%= vendor_profile.business_sub_category  %>" selected><%= vendor_profile.business_sub_category  %></option>
+                        <% if (vendor_profile && vendor_profile.business_sub_category) { %>
+                            <option value="<%= vendor_profile.business_sub_category %>" selected><%= vendor_profile.business_sub_category %></option>
                         <% } %>
                     </select>
                 </div>
 
                 <div class="form-group">
                     <label for="address">Shop Address</label>
-                    <textarea id="address" name="address" placeholder="Enter shop address" required><%= vendor_profile.business_address if vendor_profile else ''  %></textarea>
+                    <textarea id="address" name="address" placeholder="Enter shop address" required><%= (vendor_profile) ? (vendor_profile.business_address) : ('') %></textarea>
                 </div>
                 
                 <div class="form-group">
                     <label for="shop_location">Shop Location (GPS)</label>
                     <input type="text" id="shop_location" name="shop_location" placeholder="Click 'Get Location' to fetch GPS coordinates" readonly 
-                           value="<% if (vendor_profile and vendor_profile.latitude and vendor_profile.longitude) { %><%= vendor_profile.latitude  %>, <%= vendor_profile.longitude  %><% } %>">
+                           value="<% if (vendor_profile && vendor_profile.latitude && vendor_profile.longitude) { %><%= vendor_profile.latitude %>, <%= vendor_profile.longitude %><% } %>">
                     <button type="button" class="btn-secondary" onclick="getVendorCurrentLocation()" style="margin-top: 8px;">
                         <i class="fa-solid fa-location-crosshairs"></i> Get Current Location
                     </button>
@@ -97,12 +97,12 @@ Settings
                 
                 <div class="form-group">
                     <label for="phone">Phone</label>
-                    <input type="tel" id="phone" name="phone" value="<%= vendor_profile.phone if vendor_profile else ''  %>" required>
+                    <input type="tel" id="phone" name="phone" value="<%= (vendor_profile) ? (vendor_profile.phone) : ('') %>" required>
                 </div>
                 
                 <div class="form-group">
                     <label for="about">About</label>
-                    <textarea id="about" name="about" placeholder="Tell customers about your shop" rows="4"><%= vendor_profile.about if vendor_profile and vendor_profile.about else ''  %></textarea>
+                    <textarea id="about" name="about" placeholder="Tell customers about your shop" rows="4"><%= (vendor_profile && vendor_profile.about) ? (vendor_profile.about) : ('') %></textarea>
                 </div>
                 
 
@@ -114,18 +114,18 @@ Settings
                     <div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;">
                         <div style="position:relative;display:flex;align-items:center;border:2px solid #e0e0e0;border-radius:10px;overflow:hidden;transition:border-color 0.3s;" onmouseover="this.style.borderColor='#27ae60'" onmouseout="this.style.borderColor='#e0e0e0'">
                             <span style="padding:0 12px;color:#666;font-size:1.1rem;">🕐</span>
-                            <input type="time" name="opening_time" value="<%= vendor_profile.opening_time.split()[0] if vendor_profile and vendor_profile.opening_time and ' ' in vendor_profile.opening_time else ''  %>" required style="flex:1;padding:12px 8px;border:none;outline:none;font-size:1rem;">
+                            <input type="time" name="opening_time" value="<%= (vendor_profile && vendor_profile.opening_time && ' ' in vendor_profile.opening_time) ? (vendor_profile.opening_time.split()[0]) : ('') %>" required style="flex:1;padding:12px 8px;border:none;outline:none;font-size:1rem;">
                             <select name="opening_period" required style="border:none;border-left:2px solid #e0e0e0;padding:12px 15px;background:#f8f9fa;outline:none;cursor:pointer;font-weight:600;color:#555;">
-                                <option value="AM" <%= 'selected' if vendor_profile and vendor_profile.opening_time and 'AM' in vendor_profile.opening_time else ''  %>>AM</option>
-                                <option value="PM" <%= 'selected' if vendor_profile and vendor_profile.opening_time and 'PM' in vendor_profile.opening_time else ''  %>>PM</option>
+                                <option value="AM" <%= (vendor_profile && vendor_profile.opening_time && 'AM' in vendor_profile.opening_time) ? ('selected') : ('') %>>AM</option>
+                                <option value="PM" <%= (vendor_profile && vendor_profile.opening_time && 'PM' in vendor_profile.opening_time) ? ('selected') : ('') %>>PM</option>
                             </select>
                         </div>
                         <div style="position:relative;display:flex;align-items:center;border:2px solid #e0e0e0;border-radius:10px;overflow:hidden;transition:border-color 0.3s;" onmouseover="this.style.borderColor='#27ae60'" onmouseout="this.style.borderColor='#e0e0e0'">
                             <span style="padding:0 12px;color:#666;font-size:1.1rem;">🕐</span>
-                            <input type="time" name="closing_time" value="<%= vendor_profile.closing_time.split()[0] if vendor_profile and vendor_profile.closing_time and ' ' in vendor_profile.closing_time else ''  %>" required style="flex:1;padding:12px 8px;border:none;outline:none;font-size:1rem;">
+                            <input type="time" name="closing_time" value="<%= (vendor_profile && vendor_profile.closing_time && ' ' in vendor_profile.closing_time) ? (vendor_profile.closing_time.split()[0]) : ('') %>" required style="flex:1;padding:12px 8px;border:none;outline:none;font-size:1rem;">
                             <select name="closing_period" required style="border:none;border-left:2px solid #e0e0e0;padding:12px 15px;background:#f8f9fa;outline:none;cursor:pointer;font-weight:600;color:#555;">
-                                <option value="AM" <%= 'selected' if vendor_profile and vendor_profile.closing_time and 'AM' in vendor_profile.closing_time else ''  %>>AM</option>
-                                <option value="PM" <%= 'selected' if vendor_profile and vendor_profile.closing_time and 'PM' in vendor_profile.closing_time else ''  %>>PM</option>
+                                <option value="AM" <%= (vendor_profile && vendor_profile.closing_time && 'AM' in vendor_profile.closing_time) ? ('selected') : ('') %>>AM</option>
+                                <option value="PM" <%= (vendor_profile && vendor_profile.closing_time && 'PM' in vendor_profile.closing_time) ? ('selected') : ('') %>>PM</option>
                             </select>
                         </div>
                     </div>
@@ -163,14 +163,14 @@ Settings
             
             <div class="status-control">
                 <div class="status-display">
-                    <div class="status-badge <%= 'open' if vendor_profile and vendor_profile.is_open else 'closed'  %>">
-                        <i class="fa-solid fa-<%= 'check-circle' if vendor_profile and vendor_profile.is_open else 'times-circle'  %>"></i>
-                        <span><%= 'Open for Orders' if vendor_profile and vendor_profile.is_open else 'Closed'  %></span>
+                    <div class="status-badge <%= (vendor_profile && vendor_profile.is_open) ? ('open') : ('closed') %>">
+                        <i class="fa-solid fa-<%= (vendor_profile && vendor_profile.is_open) ? ('check-circle') : ('times-circle') %>"></i>
+                        <span><%= (vendor_profile && vendor_profile.is_open) ? ('Open for Orders') : ('Closed') %></span>
                     </div>
                 </div>
                 
                 <div class="toggle-switch">
-                    <input type="checkbox" id="shop_status" <%= 'checked' if vendor_profile and vendor_profile.is_open else ''  %> onchange="toggleShopStatus(this)">
+                    <input type="checkbox" id="shop_status" <%= (vendor_profile && vendor_profile.is_open) ? ('checked') : ('') %> onchange="toggleShopStatus(this)">
                     <label for="shop_status" class="switch-label">
                         <span class="switch-slider"></span>
                     </label>

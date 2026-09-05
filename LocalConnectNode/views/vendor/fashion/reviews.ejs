@@ -381,12 +381,12 @@ Reviews Management
             <div class="card-icon">
                 <i class="fa-solid fa-star"></i>
             </div>
-            <div class="card-value" id="avg-rating"><%= avg_rating  %></div>
+            <div class="card-value" id="avg-rating"><%= avg_rating %></div>
             <div class="card-label">Average Rating</div>
             <div class="stars-display">
-                <% if (range(5)) { (range(5)).forEach(i => { %>
-                    <i class="fa-solid fa-star" style="color: <%= '#f1c40f' if i < avg_rating|int else '#ecf0f1'  %>"></i>
-                <% }); } %>
+                <% [0, 1, 2, 3, 4].forEach(i => { %>
+                    <i class="fa-solid fa-star" style="color: <%= (i < avg_rating) ? ('#f1c40f') : ('#ecf0f1') %>"></i>
+                <% }); %>
             </div>
         </div>
         
@@ -394,18 +394,18 @@ Reviews Management
             <div class="card-icon">
                 <i class="fa-solid fa-comments"></i>
             </div>
-            <div class="card-value" id="total-reviews"><%= total_count  %></div>
+            <div class="card-value" id="total-reviews"><%= total_count %></div>
             <div class="card-label">Total Reviews</div>
-            <div class="card-subtext"><%= recent_count  %> this month</div>
+            <div class="card-subtext"><%= recent_count %> this month</div>
         </div>
         
         <div class="summary-card">
             <div class="card-icon">
                 <i class="fa-solid fa-reply"></i>
             </div>
-            <div class="card-value" id="response-rate"><%= response_rate  %>%</div>
+            <div class="card-value" id="response-rate"><%= response_rate %>%</div>
             <div class="card-label">Response Rate</div>
-            <div class="card-subtext"><%= responded_count  %>/<%= total_count  %> responded</div>
+            <div class="card-subtext"><%= responded_count %>/<%= total_count %> responded</div>
         </div>
     </div>
     
@@ -422,16 +422,16 @@ Reviews Management
     
     <div class="reviews-list" id="reviews-list">
         <% if (reviews && reviews.length) { reviews.forEach(function(review) { %>
-        <div class="review-card" data-rating="<%= review.review_rating  %>" data-responded="<%= 'true' if review.vendor_response else 'false'  %>" data-order-id="<%= review.id  %>">
+        <div class="review-card" data-rating="<%= review.review_rating %>" data-responded="<%= (review.vendor_response) ? ('true') : ('false') %>" data-order-id="<%= review.id %>">
             <div class="review-header">
                 <div class="customer-info">
                     <div class="customer-avatar">
                         <i class="fa-solid fa-user"></i>
                     </div>
                     <div class="customer-details">
-                        <h4><%= review.customer_name  %></h4>
+                        <h4><%= review.customer_name %></h4>
                         <div class="review-meta">
-                            <span><%= review.created_at.strftime('%d %b %Y, %I:%M %p')  %></span>
+                            <span><%= review.created_at.toLocaleDateString() %></span>
                             <span class="verified-badge">Verified Customer</span>
                         </div>
                     </div>
@@ -439,28 +439,28 @@ Reviews Management
                 
                 <div class="review-rating">
                     <div class="stars">
-                        <% if (range(5)) { (range(5)).forEach(i => { %>
-                            <i class="fa-solid fa-star" style="color: <%= '#f1c40f' if i < review.review_rating|int else '#ecf0f1'  %>"></i>
-                        <% }); } %>
+                        <% [0, 1, 2, 3, 4].forEach(i => { %>
+                            <i class="fa-solid fa-star" style="color: <%= (i < review.review_rating) ? ('#f1c40f') : ('#ecf0f1') %>"></i>
+                        <% }); %>
                     </div>
-                    <span><%= review.review_rating  %>/5</span>
+                    <span><%= review.review_rating %>/5</span>
                 </div>
             </div>
             
             <div class="review-content">
-                <p><%= review.review_comment  %></p>
+                <p><%= review.review_comment %></p>
             </div>
             
             <% if (review.vendor_response) { %>
             <div class="shop-response">
                 <div class="response-header">
                     <div class="response-title">Shop Response</div>
-                    <div class="response-date"><%= review.vendor_response_date.strftime('%d %b %Y') if review.vendor_response_date else 'Recently'  %></div>
+                    <div class="response-date"><%= (review.vendor_response_date) ? (review.vendor_response_date.toLocaleDateString()) : ('Recently') %></div>
                 </div>
-                <div class="response-text"><%= review.vendor_response  %></div>
+                <div class="response-text"><%= review.vendor_response %></div>
                 <div class="response-actions-posted">
                     <button class="edit-response-btn" onclick="editResponse(this)">Edit Response</button>
-                    <button class="helpful-btn" onclick="markHelpful(<%= review.id  %>, this)"><i class="fa-solid fa-heart" style="color: <%= '#e74c3c' if review.response_helpful and review.response_helpful > 0 else '#bdc3c7'  %>"></i> <%= review.response_helpful or 0  %></button>
+                    <button class="helpful-btn" onclick="markHelpful(<%= review.id %>, this)"><i class="fa-solid fa-heart" style="color: <%= (review.response_helpful && review.response_helpful > 0) ? ('#e74c3c') : ('#bdc3c7') %>"></i> <%= review.response_helpful || 0 %></button>
                 </div>
             </div>
             <% } else { %>
@@ -480,15 +480,15 @@ Reviews Management
                     <button class="send-btn" onclick="sendResponse(this)">Send Response</button>
                 </div>
             </div>
-            <% } %>
-        </div>
-        <% } else { %>
+            <% }
+        %></div>
+        <% }); } else { %>
         <div class="empty-state">
             <i class="fa-solid fa-star"></i>
             <h3>No Reviews Yet</h3>
             <p>Customer reviews will appear here once they start rating your service.</p>
         </div>
-        <% }); } %>
+        <% } %>
     </div>
 </div>
 

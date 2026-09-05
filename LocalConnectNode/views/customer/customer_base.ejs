@@ -15,7 +15,7 @@
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 </head>
 
-<body data-user-id="<%= user_id  %>">
+<body data-user-id="<%= user_id %>">
     <header class="navbar">
         <div class="nav-container">
             <div class="logo" onclick="window.location.href='/customer/dashboard'">
@@ -112,8 +112,8 @@
         Tawk_API.onLoad = function () {
             // Set up quick replies for order flow
             Tawk_API.setAttributes({
-                name: '<%= session.user_name or "Guest"  %>',
-                email: '<%= session.user_email or ""  %>'
+                name: '<%= (typeof session !== "undefined" && session.user_name) ? session.user_name : "Guest" %>',
+                email: '<%= (typeof session !== "undefined" && session.user_email) ? session.user_email : "" %>'
             });
             // Hide custom chat button now that Tawk is ready
             var custBtn = document.getElementById('chatBtn');

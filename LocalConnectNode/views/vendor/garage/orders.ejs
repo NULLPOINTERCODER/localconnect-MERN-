@@ -34,35 +34,35 @@ Orders
 
     <div class="orders-list-section">
         <% if (orders && orders.length) { orders.forEach(function(order) { %>
-        <div class="order-card" data-status="<%= order.status  %>">
+        <div class="order-card" data-status="<%= order.status %>">
             <div class="order-header-row">
                 <div class="header-left">
-                    <span class="order-number">Order #<%= order.id  %></span>
-                    <span class="order-time" data-timestamp="<%= order.created_at.timestamp()  %>"><%= order.created_at.strftime('%b %d, %I:%M %p')  %> | <%= order.created_at.strftime('%H:%M')  %></span>
+                    <span class="order-number">Order #<%= order.id %></span>
+                    <span class="order-time" data-timestamp="<%= order.created_at.getTime() %>"><%= order.created_at.toLocaleDateString() %> | <%= order.created_at.toLocaleDateString() %></span>
                 </div>
                 <div class="header-right">
-                    <span class="type-badge <%= order.delivery_type|lower  %>">
-                        <%= order.delivery_type|upper  %>
+                    <span class="type-badge <%= order.delivery_type.toLowerCase() %>">
+                        <%= order.delivery_type.toUpperCase() %>
                     </span>
                 </div>
             </div>
 
             <div class="order-body">
                 <div class="customer-main-info">
-                    <span class="cust-details"><strong><%= order.customer_name  %></strong> | <%= order.customer_phone  %></span>
+                    <span class="cust-details"><strong><%= order.customer_name %></strong> | <%= order.customer_phone %></span>
                     <p class="items-summary">
                         <% if (order.get_items()) { (order.get_items()).forEach(item => { %>
-                            <%= item.name  %> x<%= item.qty  %><% if (not loop.last) { %>, <% } %>
+                            <%= item.name %> x<%= item.qty %><% if (!(index === (arr ? arr.length - 1 : 0))) { %>, <% } %>
                         <% }); } %>
                     </p>
-                    <p class="total-row">Total: <strong>₹<%= order.total  %></strong> | Payment: <strong><%= 'Online' if order.payment_type == 'online' else 'Cash'  %></strong></p>
+                    <p class="total-row">Total: <strong>₹<%= order.total %></strong> | Payment: <strong><%= (order.payment_type == 'online') ? ('Online') : ('Cash') %></strong></p>
                 </div>
 
                 <div class="order-footer-actions">
                     <div class="suggestion-text-wrapper">
                         <% if (order.customer_suggestion) { %>
                             <span class="note-label">Customer Note:</span>
-                            <span class="note-content"><%= order.customer_suggestion  %></span>
+                            <span class="note-content"><%= order.customer_suggestion %></span>
                         <% } else { %>
                             <span class="note-content muted">No special instructions provided.</span>
                         <% } %>
@@ -70,39 +70,39 @@ Orders
 
                     <div class="action-buttons-group">
                         <% if (order.status == 'Pending') { %>
-                        <button class="btn-green-action" onclick="updateStatus(<%= order.id  %>, 'preparing')">Accept</button>
-                        <button class="btn-red-action" onclick="openRejectModal(<%= order.id  %>)">Reject</button>
+                        <button class="btn-green-action" onclick="updateStatus(<%= order.id %>, 'preparing')">Accept</button>
+                        <button class="btn-red-action" onclick="openRejectModal(<%= order.id %>)">Reject</button>
                         <% } else if (order.status == 'preparing') { %>
-                        <button class="btn-green-action" onclick="updateStatus(<%= order.id  %>, '<%= 'out_for_delivery' if order.delivery_type == 'delivery' else 'ready'  %>')">
+                        <button class="btn-green-action" onclick="updateStatus(<%= order.id %>, '<%= (order.delivery_type == 'delivery') ? ('out_for_delivery') : ('ready') %>')">
                             <% if (order.delivery_type == 'takeaway') { %>
                                 Ready for Takeaway
                             <% } else { %>
                                 Out for Delivery
                             <% } %>
                         </button>
-                        <% } else if (order.status == 'ready' and order.delivery_type == 'takeaway') { %>
-                        <button class="btn-green-action" onclick="updateStatus(<%= order.id  %>, 'Completed')">Order Delivered</button>
+                        <% } else if (order.status == 'ready' && order.delivery_type == 'takeaway') { %>
+                        <button class="btn-green-action" onclick="updateStatus(<%= order.id %>, 'Completed')">Order Delivered</button>
                         <% } else if (order.status == 'out_for_delivery') { %>
                         <span class="status-badge-static out_for_delivery">Out for Delivery</span>
                         <% } else { %>
-                        <span class="status-badge-static <%= order.status|lower  %>">
-                            <%= order.status  %>
+                        <span class="status-badge-static <%= order.status.toLowerCase() %>">
+                            <%= order.status %>
                         </span>
                         <% } %>
                         
-                        <a href="tel:<%= order.customer_phone  %>" class="btn-blue-call">
+                        <a href="tel:<%= order.customer_phone %>" class="btn-blue-call">
                             <i class="fa-solid fa-phone"></i> Call
                         </a>
                     </div>
                 </div>
             </div>
         </div>
-        <% } else { %>
+        <% }); } else { %>
         <div class="order-card empty-state">
             <i class="fa-solid fa-inbox"></i>
             <p>No orders found at the moment.</p>
         </div>
-        <% }); } %>
+        <% } %>
     </div>
 </div>
 
@@ -151,7 +151,7 @@ function updateStatus(orderId, status) {
                 // Get order amount and show banner
                 const orderCard = document.querySelector(`[data-status="ready"]`);
                 const amountElement = orderCard.querySelector('.total-row strong');
-                const amount = amountElement.textContent|replace('₹',''));
+                const amount = amountElement.textContent.replace('₹','');
                 showEarningsBanner(amount);
                 
                 // Wait 2 seconds then reload to show updated status and earnings

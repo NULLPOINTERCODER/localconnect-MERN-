@@ -17,7 +17,7 @@
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 </head>
 
-<body data-user-id="<%= user_id  %>">
+<body data-user-id="<%= user_id %>">
     <header class="navbar">
         <div class="nav-container">
             <div class="logo" onclick="window.location.href='/customer/dashboard'">
@@ -66,15 +66,15 @@
     </header>
     <main class="main-content">
         <section class="banner-section">
-            <div class="banner-img" style="<% if (vendor.shop_image and vendor.shop_image | replace('\1', '') | trim | length < vendor_profile.shop_image.length) { %>background-image: url('<%= vendor.shop_image  %>');<% } else if (vendor.shop_image and vendor.shop_image not in ['🏪', '🍕', '🍔', '🍜', '🥘', '🍛', '🥗', '☕']) { %>background-image: url('/static/images/shop/<%= vendor.shop_image  %>');<% } else { %>background-image: url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&q=80&w=1200');<% } %>">
+            <div class="banner-img" style="<% if (vendor.shop_image && vendor.shop_image.startsWith('data:image')) { %>background-image: url('<%= vendor.shop_image %>');<% } else if (vendor.shop_image && !['🏪', '🍕', '🍔', '🍜', '🥘', '🍛', '🥗', '☕'].includes(vendor.shop_image)) { %>background-image: url('/static/images/shop/<%= vendor.shop_image %>');<% } else { %>background-image: url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&q=80&w=1200');<% } %>">
                 <div class="banner-overlay">
-                    <h1><%= vendor.business_name  %></h1>
+                    <h1><%= vendor.business_name %></h1>
                 </div>
             </div>
 
             <div class="restaurant-details-card">
                 <div class="title-row">
-                    <h2><%= vendor.business_name  %></h2>
+                    <h2><%= vendor.business_name %></h2>
                     <div class="vendor-highlights" style="display: flex; gap: 12px; margin-top: 15px; flex-wrap: wrap; animation: slideInUp 0.6s ease-out 0.4s both;">
                         <span class="highlight-badge premium-badge" style="background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%); color: white; padding: 8px 16px; border-radius: 25px; font-size: 0.85rem; font-weight: 700; box-shadow: 0 4px 15px rgba(255,107,107,0.3); display: flex; align-items: center; gap: 6px; transition: all 0.3s ease;">⭐ Premium Quality</span>
                         <span class="highlight-badge speed-badge" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white; padding: 8px 16px; border-radius: 25px; font-size: 0.85rem; font-weight: 700; box-shadow: 0 4px 15px rgba(79,172,254,0.3); display: flex; align-items: center; gap: 6px; transition: all 0.3s ease;">🚀 Fast Service</span>
@@ -83,11 +83,11 @@
                     <div class="badge-row">
                         <span class="rating-box pulse-animation"><i class="fa-solid fa-star"></i> <span id="vendor-rating">Loading...</span></span>
                         <span class="distance"><i class="fa-solid fa-location-dot"></i> <span id="vendor-distance">Calculating...</span></span>
-                        <span class="type-badge"><%= vendor.business_category  %></span>
+                        <span class="type-badge"><%= vendor.business_category %></span>
                     </div>
                 </div>
                 <div class="info-row" style="animation: slideInUp 0.6s ease-out 0.6s both;">
-                    <span class="status-badge <%= 'status-green' if vendor.is_open else 'status-red'  %>" style="position: relative; overflow: hidden;"><i class="fa-solid fa-circle-<%= 'check' if vendor.is_open else 'xmark'  %>"></i> <%= 'Open Now' if vendor.is_open else 'Closed'  %></span>
+                    <span class="status-badge <%= (vendor.is_open) ? ('status-green') : ('status-red') %>" style="position: relative; overflow: hidden;"><i class="fa-solid fa-circle-<%= (vendor.is_open) ? ('check') : ('xmark') %>"></i> <%= (vendor.is_open) ? ('Open Now') : ('Closed') %></span>
                     <% if (vendor.takeaway) { %><span class="service-badge takeaway-badge" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); color: white; position: relative; overflow: hidden;"><i class="fa-solid fa-bag-shopping"></i> Takeaway</span><% } %>
                     <% if (vendor.home_delivery) { %><span class="service-badge delivery-badge" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white; position: relative; overflow: hidden;"><i class="fa-solid fa-motorcycle"></i> Delivery</span><% } %>
                     <span class="price-badge" style="background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%); color: #2c3e50; font-weight: 700; position: relative; overflow: hidden;"><i class="fa-solid fa-indian-rupee-sign"></i> <span id="price-range">Loading...</span></span>
@@ -118,12 +118,12 @@
                         <div style="display:flex;gap:12px;margin-bottom:25px;flex-wrap:wrap;">
                             <% if (vendor.category_type) { %>
                             <span class="info-badge" style="background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);color:white;padding:10px 20px;border-radius:25px;font-weight:600;font-size:0.9rem;box-shadow:0 4px 15px rgba(102,126,234,0.3);">
-                                <i class="fa-solid fa-utensils" style="margin-right:8px;"></i><%= vendor.category_type  %>
+                                <i class="fa-solid fa-utensils" style="margin-right:8px;"></i><%= vendor.category_type %>
                             </span>
                             <% } %>
                             <% if (vendor.veg_nonveg) { %>
                             <span class="info-badge" style="background:linear-gradient(135deg, #11998e 0%, #38ef7d 100%);color:white;padding:10px 20px;border-radius:25px;font-weight:600;font-size:0.9rem;box-shadow:0 4px 15px rgba(17,153,142,0.3);">
-                                <i class="fa-solid fa-leaf" style="margin-right:8px;"></i><%= vendor.veg_nonveg  %>
+                                <i class="fa-solid fa-leaf" style="margin-right:8px;"></i><%= vendor.veg_nonveg %>
                             </span>
                             <% } %>
                         </div>
@@ -132,13 +132,13 @@
                         <div style="margin-bottom:35px;">
                             <h3 style="margin-bottom:15px;color:#2c3e50;font-size:1.8rem;font-weight:700;display:flex;align-items:center;gap:10px;">
                                 <i class="fa-solid fa-circle-info" style="color:#3498db;font-size:1.5rem;"></i>
-                                About <%= vendor.business_name  %>
+                                About <%= vendor.business_name %>
                             </h3>
-                            <p style="line-height:1.9;color:#555;font-size:1.05rem;background:#f8f9fa;padding:20px;border-radius:12px;border-left:4px solid #3498db;"><%= vendor.about if vendor.about else 'No information available.'  %></p>
+                            <p style="line-height:1.9;color:#555;font-size:1.05rem;background:#f8f9fa;padding:20px;border-radius:12px;border-left:4px solid #3498db;"><%= (vendor.about) ? (vendor.about) : ('No information available.') %></p>
                         </div>
                         
                         <!-- Amenities Section -->
-                        <% if (vendor.indoor_seating or vendor.outdoor_seating or vendor.home_delivery or vendor.takeaway or vendor.free_wifi or vendor.ac or vendor.cooler or vendor.parking or vendor.other_amenities) { %>
+                        <% if (vendor.indoor_seating || vendor.outdoor_seating || vendor.home_delivery || vendor.takeaway || vendor.free_wifi || vendor.ac || vendor.cooler || vendor.parking || vendor.other_amenities) { %>
                         <div style="margin-bottom:35px;">
                             <h4 style="margin:0 0 25px 0;color:#2c3e50;font-size:1.6rem;font-weight:800;display:flex;align-items:center;gap:12px;">
                                 <i class="fa-solid fa-sparkles" style="color:#f39c12;font-size:1.4rem;animation: sparkle 2s infinite;"></i>
@@ -197,7 +197,7 @@
                                 <% if (vendor.parking) { %>
                                 <div class="amenity-card" style="background:linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);color:#2c3e50;padding:18px 22px;border-radius:15px;display:flex;align-items:center;gap:14px;box-shadow:0 6px 20px rgba(255,154,158,0.25);transition:all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);position:relative;overflow:hidden;">
                                     <i class="fa-solid fa-square-parking" style="font-size:1.8rem;z-index:2;"></i>
-                                    <span style="font-weight:700;font-size:1rem;z-index:2;">Parking <%= vendor.parking  %></span>
+                                    <span style="font-weight:700;font-size:1rem;z-index:2;">Parking <%= vendor.parking %></span>
                                     <div class="amenity-shine" style="position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:linear-gradient(45deg,transparent,rgba(255,255,255,0.1),transparent);transform:rotate(45deg);transition:all 0.6s ease;"></div>
                                 </div>
                                 <% } %>
@@ -205,7 +205,7 @@
                                     <% if (vendor.other_amenities.split(',')) { (vendor.other_amenities.split(',')).forEach(amenity => { %>
                                     <div class="amenity-card" style="background:linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);color:#2c3e50;padding:18px 22px;border-radius:15px;display:flex;align-items:center;gap:14px;box-shadow:0 6px 20px rgba(253,203,110,0.25);transition:all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);position:relative;overflow:hidden;">
                                         <i class="fa-solid fa-check-circle" style="font-size:1.8rem;z-index:2;"></i>
-                                        <span style="font-weight:700;font-size:1rem;z-index:2;"><%= amenity|trim  %></span>
+                                        <span style="font-weight:700;font-size:1rem;z-index:2;"><%= amenity.trim() %></span>
                                         <div class="amenity-shine" style="position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:linear-gradient(45deg,transparent,rgba(255,255,255,0.1),transparent);transform:rotate(45deg);transition:all 0.6s ease;"></div>
                                     </div>
                                     <% }); } %>
@@ -217,25 +217,25 @@
                         <!-- Contact Information -->
                         <div>
                             <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;">
-                                <% if (vendor.opening_time and vendor.closing_time) { %>
+                                <% if (vendor.opening_time && vendor.closing_time) { %>
                                 <div style="background:linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);padding:20px;border-radius:12px;box-shadow:0 4px 15px rgba(252,182,159,0.2);">
                                     <h5 style="margin:0 0 10px 0;color:#d35400;font-size:1rem;display:flex;align-items:center;gap:8px;">
                                         <i class="fa-solid fa-clock"></i> Timings
                                     </h5>
-                                    <p style="margin:0;color:#2c3e50;font-weight:600;font-size:1.1rem;"><%= vendor.opening_time  %> - <%= vendor.closing_time  %></p>
+                                    <p style="margin:0;color:#2c3e50;font-weight:600;font-size:1.1rem;"><%= vendor.opening_time %> - <%= vendor.closing_time %></p>
                                 </div>
                                 <% } %>
                                 <div style="background:linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);padding:20px;border-radius:12px;box-shadow:0 4px 15px rgba(161,196,253,0.2);">
                                     <h5 style="margin:0 0 10px 0;color:#2980b9;font-size:1rem;display:flex;align-items:center;gap:8px;">
                                         <i class="fa-solid fa-phone"></i> Contact
                                     </h5>
-                                    <p style="margin:0;color:#2c3e50;font-weight:600;font-size:1.1rem;"><%= vendor.phone  %></p>
+                                    <p style="margin:0;color:#2c3e50;font-weight:600;font-size:1.1rem;"><%= vendor.phone %></p>
                                 </div>
                                 <div style="background:linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);padding:20px;border-radius:12px;box-shadow:0 4px 15px rgba(253,203,110,0.2);">
                                     <h5 style="margin:0 0 10px 0;color:#d63031;font-size:1rem;display:flex;align-items:center;gap:8px;">
                                         <i class="fa-solid fa-location-dot"></i> Address
                                     </h5>
-                                    <p style="margin:0;color:#2c3e50;font-weight:600;font-size:1.05rem;"><%= vendor.business_address  %></p>
+                                    <p style="margin:0;color:#2c3e50;font-weight:600;font-size:1.05rem;"><%= vendor.business_address %></p>
                                 </div>
                             </div>
                         </div>
@@ -306,7 +306,7 @@
     <script src="/static/js/customer/base.js"></script>
     <script>
         // Set vendor ID for discount box
-        window.currentVendorId = <%= vendor_id  %>;
+        window.currentVendorId = <%= vendor_id %>;
         // Global functions for profile dropdown
         function viewProfile() {
             window.location.href = '/customer/profile';
@@ -327,9 +327,9 @@
             window.location.href = '/logout';
         }
         
-        const userId = '<%= user_id if user_id else ""  %>';
-        const vendorId = '<%= vendor.id if vendor else (vendor_id if vendor_id else "")  %>';
-        const vendorName = '<%= vendor.business_name if vendor else ""  %>';
+        const userId = '<%= (user_id) ? (user_id) : ("") %>';
+        const vendorId = '<%= (vendor) ? (vendor.id) : ((typeof vendor_id !== "undefined" && vendor_id) ? vendor_id : "") %>';
+        const vendorName = '<%= (vendor) ? (vendor.business_name) : ("") %>';
 
         // Clear ALL localStorage if different user logs in
         const lastUserId = localStorage.getItem('lastUserId');
@@ -339,7 +339,7 @@
         if (userId) localStorage.setItem('lastUserId', userId);
 
         const ordersKey = userId ? `user_${userId}_orders` : 'orders';
-        const initialMenuItems = <%= (menu_items | tojson) if menu_items else '[]'  %>;
+        const initialMenuItems = <%= (menu_items) ? ((menu_items | tojson)) : ('[]') %>;
         let menuItems = Array.isArray(initialMenuItems) ? initialMenuItems.map(item => ({
             id: item.id || item._id,
             name: item.name,
@@ -391,8 +391,8 @@
         }
 
         // Calculate distance if vendor has coordinates
-        const vendorLat = <%= vendor.latitude if vendor.latitude else 'null'  %>;
-        const vendorLon = <%= vendor.longitude if vendor.longitude else 'null'  %>;
+        const vendorLat = <%= (vendor.latitude) ? (vendor.latitude) : ('null') %>;
+        const vendorLon = <%= (vendor.longitude) ? (vendor.longitude) : ('null') %>;
         
         if (vendorLat && vendorLon && navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
@@ -425,8 +425,8 @@
         }
 
         function openGoogleMaps() {
-            const vendorLat = <%= vendor.latitude if vendor.latitude else 'null'  %>;
-            const vendorLon = <%= vendor.longitude if vendor.longitude else 'null'  %>;
+            const vendorLat = <%= (vendor.latitude) ? (vendor.latitude) : ('null') %>;
+            const vendorLon = <%= (vendor.longitude) ? (vendor.longitude) : ('null') %>;
             
             if (!vendorLat || !vendorLon) {
                 alert('Location not available for this vendor.');
@@ -456,8 +456,8 @@
         let routingControl = null;
 
         function showMapModal() {
-            const vendorLat = <%= vendor.latitude if vendor.latitude else 'null'  %>;
-            const vendorLon = <%= vendor.longitude if vendor.longitude else 'null'  %>;
+            const vendorLat = <%= (vendor.latitude) ? (vendor.latitude) : ('null') %>;
+            const vendorLon = <%= (vendor.longitude) ? (vendor.longitude) : ('null') %>;
             
             if (!vendorLat || !vendorLon) {
                 alert('Location not available for this vendor.');
@@ -505,7 +505,7 @@
                                             popupAnchor: [1, -34],
                                             shadowSize: [41, 41]
                                         })
-                                    }).bindPopup(i === 0 ? '<b>Your Location</b>' : '<b><%= vendor.business_name  %></b><br><%= vendor.business_address  %>');
+                                    }).bindPopup(i === 0 ? '<b>Your Location</b>' : '<b><%= vendor.business_name %></b><br><%= vendor.business_address %>');
                                 }
                             }).addTo(mapInstance);
                             
@@ -515,19 +515,19 @@
                                 const time = Math.round(route.summary.totalTime / 60);
                                 L.popup()
                                     .setLatLng([vendorLat, vendorLon])
-                                    .setContent(`<b><%= vendor.business_name  %></b><br>Distance: ${distance} km<br>Time: ${time} min`)
+                                    .setContent(`<b><%= vendor.business_name %></b><br>Distance: ${distance} km<br>Time: ${time} min`)
                                     .openOn(mapInstance);
                             });
                         },
                         () => {
                             L.marker([vendorLat, vendorLon]).addTo(mapInstance)
-                                .bindPopup(`<b><%= vendor.business_name  %></b><br><%= vendor.business_address  %>`).openPopup();
+                                .bindPopup(`<b><%= vendor.business_name %></b><br><%= vendor.business_address %>`).openPopup();
                             mapInstance.setView([vendorLat, vendorLon], 15);
                         }
                     );
                 } else {
                     L.marker([vendorLat, vendorLon]).addTo(mapInstance)
-                        .bindPopup(`<b><%= vendor.business_name  %></b><br><%= vendor.business_address  %>`).openPopup();
+                        .bindPopup(`<b><%= vendor.business_name %></b><br><%= vendor.business_address %>`).openPopup();
                     mapInstance.setView([vendorLat, vendorLon], 15);
                 }
             }, 100);
@@ -538,8 +538,8 @@
         }
 
         function openGoogleMaps() {
-            const vendorLat = <%= vendor.latitude if vendor.latitude else 'null'  %>;
-            const vendorLon = <%= vendor.longitude if vendor.longitude else 'null'  %>;
+            const vendorLat = <%= (vendor.latitude) ? (vendor.latitude) : ('null') %>;
+            const vendorLon = <%= (vendor.longitude) ? (vendor.longitude) : ('null') %>;
             
             if (!vendorLat || !vendorLon) {
                 alert('Location not available for this vendor.');
@@ -583,8 +583,8 @@
         });
 
         function renderMenuCards() {
-            const isOpen = <%= 'true' if vendor.is_open else 'false'  %>;
-            const isGarage = '<%= vendor.business_category  %>' === 'Garage';
+            const isOpen = <%= (vendor.is_open) ? ('true') : ('false') %>;
+            const isGarage = '<%= vendor.business_category %>' === 'Garage';
             const menuGrid = document.getElementById('menu-grid');
             menuGrid.innerHTML = menuItems.map(item => {
                 const imageUrl = item.image_file && item.image_file !== 'default.jpg'
@@ -612,7 +612,7 @@
         }
 
         function addToCart(itemId) {
-            const isOpen = <%= 'true' if vendor.is_open else 'false'  %>;
+            const isOpen = <%= (vendor.is_open) ? ('true') : ('false') %>;
             if (!isOpen) {
                 alert('Sorry, this shop is currently closed. You cannot place orders at this time.');
                 return;
@@ -697,7 +697,7 @@
             if (cartItems.length === 0) { alert('Your cart is empty!'); return; }
             const total = cartItems.reduce((s, i) => s + (i.qty * i.price), 0);
             
-            const isGarage = '<%= vendor.business_category  %>' === 'Garage';
+            const isGarage = '<%= vendor.business_category %>' === 'Garage';
             if (isGarage) {
                 showLocationChoice(total);
             } else {
@@ -753,7 +753,7 @@
         function selectLocation(locationType, subtotal) {
             // Store selected location type for order processing
             window.selectedLocationType = locationType;
-            const isGarage = '<%= vendor.business_category  %>' === 'Garage';
+            const isGarage = '<%= vendor.business_category %>' === 'Garage';
             if (isGarage) {
                 proceedWithDeliveryType('delivery', subtotal);
             } else {
@@ -762,7 +762,7 @@
         }
         
         function proceedWithDeliveryType(type, subtotal) {
-            const isGarage = '<%= vendor.business_category  %>' === 'Garage';
+            const isGarage = '<%= vendor.business_category %>' === 'Garage';
             const deliveryType = isGarage ? 'delivery' : type;
             const deliveryFee = deliveryType === 'delivery' ? 30 : 0;
             
@@ -953,7 +953,7 @@
             updateCart();
             renderMenuCards();
             closeCart();
-            const isGarage = '<%= vendor.business_category  %>' === 'Garage';
+            const isGarage = '<%= vendor.business_category %>' === 'Garage';
             const paymentMethod = paymentType === 'online' ? 'Online Payment' : `Cash on ${isGarage ? 'Service' : (deliveryType === 'delivery' ? 'Delivery' : 'Pickup')}`;
             const timeEstimate = isGarage ? '30-45 minutes' : (deliveryType === 'delivery' ? '25-30 minutes' : '15-20 minutes');
             const serviceType = isGarage ? 'Service Booking' : (deliveryType === 'delivery' ? 'Home Delivery' : 'Takeaway');
