@@ -33,7 +33,7 @@ Orders
     </div>
 
     <div class="orders-list-section">
-        <% if (orders) { (orders).forEach(order => { %>
+        <% if (orders && orders.length) { orders.forEach(function(order) { %>
         <div class="order-card" data-status="<%= order.status  %>">
             <div class="order-header-row">
                 <div class="header-left">
@@ -53,7 +53,7 @@ Orders
                     <p class="items-summary">
                         <% if (order.get_items()) { (order.get_items()).forEach(item => { %>
                             <%= item.name  %> x<%= item.qty  %><% if (not loop.last) { %>, <% } %>
-                        <% })); } %>
+                        <% }); } %>
                     </p>
                     <p class="total-row">Total: <strong>₹<%= order.total  %></strong> | Payment: <strong><%= 'Online' if order.payment_type == 'online' else 'Cash'  %></strong></p>
                 </div>
@@ -102,7 +102,7 @@ Orders
             <i class="fa-solid fa-inbox"></i>
             <p>No orders found at the moment.</p>
         </div>
-        <% })); } %>
+        <% }); } %>
     </div>
 </div>
 

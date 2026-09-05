@@ -71,7 +71,7 @@
                     orders_query else 0  %></span></h2>
             <div class="orders-list" id="orders-list">
                 <% if (orders_query) { %>
-                <% if (orders_query) { (orders_query).forEach(order => { %>
+                <% if (orders_query && orders_query.length) { orders_query.forEach(function(order) { %>
                 <div class="order-card enhanced-order-card" onclick="showOrderDetails(<%= order.id  %>)">
                     <div
                         class="order-status-indicator <%= 'delivered' if order.status == 'Completed' else order.status  %>">
@@ -89,7 +89,7 @@
                         </div>
                     </div>
                     <div class="order-items enhanced-items">
-                        <p><i class="fa-solid fa-utensils"></i> <% if (order.get_items()) { (order.get_items()).forEach(item => { %><%= item.name  %> x<%= item.qty  %><% if (not loop.last) { %>, <% } %><% })); } %></p>
+                        <p><i class="fa-solid fa-utensils"></i> <% if (order.get_items()) { (order.get_items()).forEach(item => { %><%= item.name  %> x<%= item.qty  %><% if (not loop.last) { %>, <% } %><% }); } %></p>
                     </div>
                     <div class="order-meta enhanced-meta">
                         <span class="order-type"><%= '🚚 Delivery' if order.delivery_type == 'delivery' else '🏪
@@ -98,7 +98,7 @@
                              %></span>
                     </div>
                 </div>
-                <% })); } %>
+                <% }); } %>
                 <% } else { %>
                 <div class="empty-orders-state">
                     <div class="empty-icon-container">

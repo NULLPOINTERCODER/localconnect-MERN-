@@ -29,10 +29,10 @@
             <% if (messages && messages.length) { %>
             <% messages.forEach(([category, message]) => { %>
             <div class="alert alert-<%= category === "success" ? "success" : "error" %>"
-                style="padding:10px;margin:10px 0;border-radius:8px;background:<%= '#d4edda' if category == 'success' else '#f8d7da'  %>;color:<%= '#155724' if category == 'success' else '#721c24'  %>;">
+                style="padding:10px;margin:10px 0;border-radius:8px;background:<%= category === 'success' ? '#d4edda' : '#f8d7da' %>;color:<%= category === 'success' ? '#155724' : '#721c24' %>;">
                 <%= message %>
             </div>
-            <% })); } %>
+            <% }); } %>
             <% } %>
             
 

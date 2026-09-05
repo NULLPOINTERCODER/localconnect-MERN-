@@ -20,7 +20,7 @@ Menu Management
     </div>
 
     <div class="menu-items-grid">
-        <% if (items) { (items).forEach(item => { %>
+        <% if (items && items.length) { items.forEach(function(item) { %>
         <div class="menu-item-card <% if (not item.is_available) { %>unavailable<% } %>" data-item-id="<%= item.id  %>">
             <div class="item-image-container">
                 <img src="<%= url_for('static', filename='images/food/' + (item.image_file if item.image_file else 'default.jpg'))  %>"
@@ -72,7 +72,7 @@ Menu Management
                 <i class="fa-solid fa-plus"></i> Add Your First Item
             </button>
         </div>
-        <% })); } %>
+        <% }); } %>
     </div>
 </div>
 

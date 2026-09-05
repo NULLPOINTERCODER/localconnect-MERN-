@@ -440,7 +440,7 @@ function showNotification(message, type = 'info') {
             <a href="/vendor/orders" class="view-link">View All <i class="fa-solid fa-chevron-right"></i></a>
         </div>
         <div class="orders-grid">
-            <% if (orders) { (orders).forEach(order => { %>
+            <% if (orders && orders.length) { orders.forEach(function(order) { %>
             <div class="order-card compact" data-order-id="<%= order.id  %>">
                 <div class="order-header">
                     <div class="order-id">#<%= order.id  %></div>
@@ -499,7 +499,7 @@ function showNotification(message, type = 'info') {
                 <i class="fa-solid fa-inbox" style="font-size: 3rem; color: #ddd; margin-bottom: 15px;"></i>
                 <p>No orders yet</p>
             </div>
-            <% })); } %>
+            <% }); } %>
         </div>
     </div>
 
@@ -520,7 +520,7 @@ function showNotification(message, type = 'info') {
                         </tr>
                     </thead>
                     <tbody>
-                        <% if (menu_items) { (menu_items).forEach(item => { %>
+                        <% if (menu_items && menu_items.length) { menu_items.forEach(function(item) { %>
                         <tr>
                             <td><%= item.name  %></td>
                             <td>₹<%= item.price  %></td>
@@ -547,7 +547,7 @@ function showNotification(message, type = 'info') {
                                 No menu items found. <a href="/vendor/menu" style="color: var(--primary-green);">Add items</a>
                             </td>
                         </tr>
-                        <% })); } %>
+                        <% }); } %>
                     </tbody>
                 </table>
             </div>

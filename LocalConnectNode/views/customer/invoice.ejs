@@ -99,7 +99,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <% if (items) { (items).forEach(item => { %>
+                    <% if (items && items.length) { items.forEach(function(item) { %>
                     <tr>
                         <td>
                             <span class="item-name"><%= item.name  %></span>
@@ -111,7 +111,7 @@
                         <td>₹<%= item.price  %></td>
                         <td>₹<%= item.price * item.qty  %></td>
                     </tr>
-                    <% })); } %>
+                    <% }); } %>
                     <% if (order.discount_amount and order.discount_amount > 0) { %>
                     <tr class="discount-row">
                         <td colspan="3">

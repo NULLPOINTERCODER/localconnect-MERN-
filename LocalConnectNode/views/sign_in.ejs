@@ -23,11 +23,10 @@
             <% const messages = get_flashed_messages(); %>
                 <% if (messages && messages.length) { %>
                     <% messages.forEach(([category, message]) => { %>
-                        <div class="alert alert-<%= 'success' if category == 'success' else 'error'  %>">
+                        <div class="alert alert-<%= category === 'success' ? 'success' : 'error' %>">
                             <%= message  %>
                         </div>
-                    <% })); } %>
-                <% } %>
+                    <% }); %>
             
 
             <form class="signin-form" method="POST" action="<%= '/signin'  %>">

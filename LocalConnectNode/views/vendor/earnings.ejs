@@ -117,7 +117,7 @@ Earnings
                     </tr>
                 </thead>
                 <tbody>
-                    <% if (earnings_history) { (earnings_history).forEach(order => { %>
+                    <% if (earnings_history && earnings_history.length) { earnings_history.forEach(function(order) { %>
                     <tr>
                         <td>#<%= order.id  %></td>
                         <td><%= order.customer_name  %></td>
@@ -134,7 +134,7 @@ Earnings
                             <p>No orders found.</p>
                         </td>
                     </tr>
-                    <% })); } %>
+                    <% }); } %>
                 </tbody>
             </table>
         </div>

@@ -386,7 +386,7 @@ Reviews Management
             <div class="stars-display">
                 <% if (range(5)) { (range(5)).forEach(i => { %>
                     <i class="fa-solid fa-star" style="color: <%= '#f1c40f' if i < avg_rating|int else '#ecf0f1'  %>"></i>
-                <% })); } %>
+                <% }); } %>
             </div>
         </div>
         
@@ -421,7 +421,7 @@ Reviews Management
     </div>
     
     <div class="reviews-list" id="reviews-list">
-        <% if (reviews) { (reviews).forEach(review => { %>
+        <% if (reviews && reviews.length) { reviews.forEach(function(review) { %>
         <div class="review-card" data-rating="<%= review.review_rating  %>" data-responded="<%= 'true' if review.vendor_response else 'false'  %>" data-order-id="<%= review.id  %>">
             <div class="review-header">
                 <div class="customer-info">
@@ -441,7 +441,7 @@ Reviews Management
                     <div class="stars">
                         <% if (range(5)) { (range(5)).forEach(i => { %>
                             <i class="fa-solid fa-star" style="color: <%= '#f1c40f' if i < review.review_rating|int else '#ecf0f1'  %>"></i>
-                        <% })); } %>
+                        <% }); } %>
                     </div>
                     <span><%= review.review_rating  %>/5</span>
                 </div>
@@ -488,7 +488,7 @@ Reviews Management
             <h3>No Reviews Yet</h3>
             <p>Customer reviews will appear here once they start rating your service.</p>
         </div>
-        <% })); } %>
+        <% }); } %>
     </div>
 </div>
 
