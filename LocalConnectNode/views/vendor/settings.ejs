@@ -29,7 +29,7 @@ Settings
                 <div class="shop-image-container" onclick="showShopImageOptions()">
                     <div class="shop-image" id="shopImage">
                         <% if (vendor_profile && vendor_profile.shop_image) { %>
-                            <% if (vendor_profile.shop_image | replace('\1', '') | trim | length < vendor_profile.shop_image.length) { %>
+                            <% if (vendor_profile.shop_image && (vendor_profile.shop_image.includes('/') || vendor_profile.shop_image.includes('.') || vendor_profile.shop_image.startsWith('data:'))) { %>
                                 <img src="<%= vendor_profile.shop_image %>" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" onerror="this.innerHTML='🏪';">
                             <% } else if (vendor_profile.shop_image.length < 5) { %>
                                 <%= vendor_profile.shop_image %>

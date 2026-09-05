@@ -469,7 +469,7 @@
                 avatar.style.backgroundPosition = 'center';
                 avatar.textContent = '';
             } else {
-                avatar.textContent = '<%= (customer) ? (customer.full_name|first.toUpperCase()) : ("U") %>';
+                avatar.textContent = '<%= (customer && customer.full_name && customer.full_name.length > 0) ? (customer.full_name[0].toUpperCase()) : ("U") %>';
             }
         });
 
