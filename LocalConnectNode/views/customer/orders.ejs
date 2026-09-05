@@ -67,10 +67,10 @@
     </header>
     <main class="content-wrapper">
         <div class="orders-container">
-            <h2 class="page-title enhanced-title">My Orders <span class="orders-count"><%= (orders_query) ? (orders_query.length) : (0) %></span></h2>
+            <h2 class="page-title enhanced-title">My Orders <span class="orders-count"><%= (orders) ? (orders.length) : (0) %></span></h2>
             <div class="orders-list" id="orders-list">
-                <% if (orders_query) { %>
-                <% if (orders_query && orders_query.length) { orders_query.forEach(function(order) { %>
+                <% if (orders) { %>
+                <% if (orders && orders.length) { orders.forEach(function(order) { %>
                 <div class="order-card enhanced-order-card" onclick="showOrderDetails(<%= order.id %>)">
                     <div
                         class="order-status-indicator <%= (order.status == 'Completed') ? ('delivered') : (order.status) %>">
