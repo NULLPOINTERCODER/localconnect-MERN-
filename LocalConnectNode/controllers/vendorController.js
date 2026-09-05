@@ -14,11 +14,31 @@ exports.getDashboard = async (req, res) => {
     const rawMenuItems = await MenuItem.find({ vendor: vendorId });
     const menu_items = rawMenuItems.map(toFlaskMenuItem);
     const labels = getCategoryLabels(vendor ? vendor.business_category : '');
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const todaysOrdersList = rawOrders.filter(o => o.createdAt && new Date(o.createdAt) >= today);
+    const todays_orders = todaysOrdersList.length;
+    const todays_earnings = todaysOrdersList
+      .filter(o => o.status === 'Completed')
+      .reduce((sum, o) => sum + (o.total || 0), 0);
+    const pending_orders = rawOrders.filter(o => o.status === 'Pending').length;
+
+    const ratedOrders = rawOrders.filter(o => o.reviewRating && o.reviewRating > 0);
+    const avg_rating = ratedOrders.length
+      ? (ratedOrders.reduce((sum, o) => sum + o.reviewRating, 0) / ratedOrders.length).toFixed(1)
+      : (vendor && vendor.rating ? Number(vendor.rating).toFixed(1) : '5.0');
+
     res.render('vendor/vendor_dashboard', {
       vendor_profile: vendor,
       orders,
       menu_items,
       labels,
+      todays_orders,
+      todays_earnings,
+      avg_rating,
+      pending_orders,
       unread_count: 0,
     });
   } catch (err) {

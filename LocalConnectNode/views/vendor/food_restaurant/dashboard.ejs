@@ -389,7 +389,7 @@ function showNotification(message, type = 'info') {
             </div>
             <div class="stat-info">
                 <p>Today's Orders</p>
-                <h3><%= todays_orders %></h3>
+                <h3><%= (typeof todays_orders !== 'undefined') ? todays_orders : 0 %></h3>
             </div>
         </div>
 
@@ -399,7 +399,7 @@ function showNotification(message, type = 'info') {
             </div>
             <div class="stat-info">
                 <p>Today's Earnings</p>
-                <h3>₹<%= todays_earnings %></h3>
+                <h3>₹<%= (typeof todays_earnings !== 'undefined') ? todays_earnings : 0 %></h3>
             </div>
         </div>
 
@@ -409,7 +409,7 @@ function showNotification(message, type = 'info') {
             </div>
             <div class="stat-info">
                 <p>Rating</p>
-                <h3><%= avg_rating %> <span class="star-mini">★</span></h3>
+                <h3><%= (typeof avg_rating !== 'undefined') ? avg_rating : '5.0' %> <span class="star-mini">★</span></h3>
             </div>
         </div>
 
@@ -419,7 +419,7 @@ function showNotification(message, type = 'info') {
             </div>
             <div class="stat-info">
                 <p>Pending Orders</p>
-                <h3><%= pending_orders %></h3>
+                <h3><%= (typeof pending_orders !== 'undefined') ? pending_orders : 0 %></h3>
             </div>
         </div>
 

@@ -89,6 +89,10 @@ app.use((req, res, next) => {
   res.locals.user_role = userRole;
   res.locals.user_id = userId;
   res.locals.unread_count = 0;
+  res.locals.todays_orders = 0;
+  res.locals.todays_earnings = 0;
+  res.locals.avg_rating = '5.0';
+  res.locals.pending_orders = 0;
   res.locals.get_flashed_messages = (options) => {
     const errorMsg = req.flash('error');
     const successMsg = req.flash('success');
